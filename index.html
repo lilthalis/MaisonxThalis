@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Marini ✕ lil Thalis | Hub</title>
+  <style>
+    /* ==========================================================================
+       Variáveis e Estética Apple
+       ========================================================================== */
+    :root {
+      --bg-color: #f5f5f7; /* Fundo cinza claro clássico da Apple */
+      --card-bg: rgba(255, 255, 255, 0.7); /* Efeito translúcido */
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      --radius: 20px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 60px;
+    }
+
+    /* ==========================================================================
+       Hero Section (Topo com Imagem e Título)
+       ========================================================================== */
+    .hero {
+      position: relative;
+      height: 40vh;
+      min-height: 350px;
+      /* Substitua o link abaixo pela sua foto premium */
+      background: linear-gradient(to bottom, rgba(245,245,247,0) 50%, rgba(245,245,247,1) 100%), 
+                  url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    /* Redes Sociais */
+    .social-links {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .social-links div {
+      width: 40px;
+      height: 40px;
+      background: var(--text-main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .social-links div:hover { transform: scale(1.05); }
+
+    /* ==========================================================================
+       Conteúdo Principal (Links e Vídeos)
+       ========================================================================== */
+    .content-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 12px;
+      padding-left: 5px;
+    }
+
+    /* Cartões Horizontais (Estilo Botão Largo) */
+    .link-card {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px); /* Efeito vidro da Apple */
+      -webkit-backdrop-filter: blur(20px);
+      padding: 12px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text-main);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 12px;
+    }
+
+    .link-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+
+    .link-image {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background-color: #ddd;
+      margin-right: 16px;
+      object-fit: cover;
+    }
+
+    .link-text h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .link-text p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Cartão de Vídeo (Estilo VEVO do TKL, mas clean) */
+    .video-card {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .video-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .play-button::after {
+      content: '';
+      border-style: solid;
+      border-width: 10px 0 10px 16px;
+      border-color: transparent transparent transparent var(--text-main);
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topo com a imagem imersiva -->
+  <header class="hero">
+    <h1 class="hero-title">Maison Marini ✕ lil Thalis</h1>
+    <div class="social-links">
+      <div>IG</div>
+      <div>TT</div>
+      <div>YT</div>
+    </div>
+  </header>
+
+  <main class="content-wrapper">
+    
+    <!-- Seção de Ações Principais -->
+    <section>
+      <h2 class="section-title">O Futuro</h2>
+      
+      <a href="#" class="link-card">
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Relatório 2030">
+        <div class="link-text">
+          <h3>Missão Carbono Zero 2030</h3>
+          <p>Leia nosso manifesto sustentável</p>
+        </div>
+      </a>
+
+      <a href="#" class="link-card">
+        <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Loja">
+        <div class="link-text">
+          <h3>Coleção Cápsula Reciclada</h3>
+          <p>Disponível na loja oficial</p>
+        </div>
+      </a>
+    </section>
+
+    <!-- Seção de Mídia (Igual aos clipes do TKL) -->
+    <section>
+      <h2 class="section-title">Campanha Visual</h2>
+      <div class="video-card">
+        <!-- Placeholder para a thumbnail do vídeo -->
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop" alt="Video cover">
+        <div class="play-button"></div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
