@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini ✕ Lil Thalis | O Legado</title>
-  
-  <!-- Tipografia Editorial Italiana e Minimalista -->
+  <title>Maison Marini × Lil Thalis</title>
+
+  <!-- Tipografia: Serifas monumentais para os títulos e Sans-serif limpa para UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <!-- GSAP & Lenis via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -17,214 +17,215 @@
 
   <style>
     /* ==========================================================================
-       Variáveis e Reset de Luxo Discreto
+       Variáveis e Reset de Luxo Editorial
        ========================================================================== */
     :root {
-      --color-abyss: #0a0b0c;
-      --color-oxidized: #2c251e;
-      --color-ocean: #1a2226;
-      --color-mist: #e2e4e3;
-      --color-moss: #c4cdc5;
-      --color-pure: #ffffff;
+      --bg-color: #f7f6f2; /* Tom de papel italiano/pergaminho */
+      --text-color: #1a1a1a;
+      --accent-color: #3b4238; /* Verde musgo profundo e desbotado */
       
-      --font-display: 'Playfair Display', serif;
-      --font-body: 'Lato', sans-serif;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui: 'Inter', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      font-family: var(--font-body);
-      background-color: var(--color-abyss);
-      color: var(--color-mist);
+      font-family: var(--font-ui);
+      background-color: var(--bg-color);
+      color: var(--text-color);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ==========================================================================
-       A Âncora (Elemento Central Fixo)
-       ========================================================================== */
-    #anchor-canvas {
+    /* Efeito de Iluminação Dinâmica ao Fundo */
+    .ambient-light {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 400px;
-      z-index: 10;
-      pointer-events: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .anchor-layer {
-      position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      transition: opacity 0.5s ease;
+      width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(247,246,242,1) 80%);
+      z-index: -1;
+      pointer-events: none;
     }
-
-    /* Camadas de Evolução da Âncora em SVG */
-    #anchor-oxidized { opacity: 1; stroke: #4a3b2c; stroke-width: 4; fill: none; stroke-linecap: round; }
-    #anchor-metallic { opacity: 0; stroke: #d1d5d6; stroke-width: 3; fill: none; stroke-linecap: round; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
-    #anchor-organic  { opacity: 0; stroke: #8f9c8f; stroke-width: 2; fill: none; stroke-linecap: round; }
 
     /* ==========================================================================
-       Estrutura Cinematográfica (Capítulos)
+       Header Minimalista & Assinatura da Âncora
        ========================================================================== */
-    .chapter {
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 30px 4vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      mix-blend-mode: difference;
+      color: #fff;
+    }
+
+    .brand-name {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tiny-anchor {
+      width: 12px;
+      height: 12px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-links {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       Seções Cinematográficas
+       ========================================================================== */
+    .scene {
       position: relative;
       width: 100vw;
-      height: 150vh; /* Altura extra para permitir depth scrolling longo */
+      height: 150vh; /* Altura extra para longo tempo de scroll */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      z-index: 2;
+      overflow: hidden;
     }
 
-    .content-block {
-      max-width: 600px;
-      padding: 0 20px;
-      opacity: 0; /* Começa invisível para o GSAP animar */
-      transform: translateY(40px);
-      filter: blur(10px);
+    /* O invólucro da câmera virtual */
+    .camera-rig {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    .chapter-subtitle {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.3em;
-      margin-bottom: 24px;
-      color: rgba(255,255,255,0.5);
-    }
-
-    .chapter-title {
+    /* A Tipografia Monumental */
+    .monumental-text {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 400;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      font-style: italic;
-    }
-
-    .chapter-text {
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: clamp(4rem, 15vw, 16rem);
       font-weight: 300;
-      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+      perspective: 1000px; /* Para o efeito 3D das letras */
     }
 
-    /* Cores e Fundos Transicionais por Capítulo */
-    #chap-origin { background-color: transparent; }
-    #chap-wind { background-color: transparent; }
-    #chap-nature { background-color: transparent; }
-    
-    #chap-legacy {
-      height: 100vh; /* Finaliza exatamente na tela */
-      background-color: var(--color-mist);
-      color: var(--color-abyss);
+    /* As letras individuais geradas via JS */
+    .char {
+      display: inline-block;
+      will-change: transform, opacity, filter;
+      transform-style: preserve-3d;
+      transform-origin: center center;
     }
-    #chap-legacy .chapter-subtitle { color: rgba(0,0,0,0.4); }
-    #chap-legacy .chapter-text { color: rgba(0,0,0,0.6); }
 
-    /* Background dinâmico geral */
-    #dynamic-bg {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: var(--color-abyss);
-      z-index: 0;
+    /* O Subtexto Editorial */
+    .subtext {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-style: italic;
+      color: var(--accent-color);
+      margin-top: 2rem;
+      max-width: 500px;
+      opacity: 0; /* Animado via GSAP */
+      transform: translateY(30px);
     }
+
+    /* Estilo invertido para a cena final (Legado) */
+    .scene.dark-mode {
+      background-color: #121212;
+      color: #e5e5e5;
+    }
+    .scene.dark-mode .monumental-text { color: #e5e5e5; }
+    .scene.dark-mode .subtext { color: #a5a5a5; }
 
   </style>
 </head>
 <body>
 
-  <!-- Fundo que muda de cor suavemente via GSAP -->
-  <div id="dynamic-bg"></div>
+  <!-- Iluminação Dinâmica de Fundo -->
+  <div class="ambient-light" id="ambientLight"></div>
 
-  <!-- A Âncora Central Fixa -->
-  <div id="anchor-canvas">
-    <svg viewBox="0 0 100 150" class="anchor-layer">
-      <!-- Camada 1: Oxidada, Pesada, Escura -->
-      <g id="anchor-oxidized">
-        <circle cx="50" cy="20" r="10" />
-        <line x1="50" y1="30" x2="50" y2="120" />
-        <line x1="25" y1="50" x2="75" y2="50" />
-        <path d="M 20,100 C 20,140 80,140 80,100" />
-        <path d="M 15,95 L 25,105 M 85,95 L 75,105" />
-      </g>
-      <!-- Camada 2: Metálica, Polida, Brilhante -->
-      <g id="anchor-metallic">
-        <circle cx="50" cy="20" r="8" />
-        <line x1="50" y1="28" x2="50" y2="120" />
-        <line x1="30" y1="50" x2="70" y2="50" />
-        <path d="M 25,100 C 25,130 75,130 75,100" />
-        <polygon points="20,95 28,105 20,100" />
-        <polygon points="80,95 72,105 80,100" />
-      </g>
-      <!-- Camada 3: Orgânica, Raízes, Natureza -->
-      <g id="anchor-organic">
-        <!-- Detalhes de folhagens e vento abraçando o metal -->
-        <path d="M 45,30 Q 30,60 50,80 T 55,120" stroke-dasharray="4 2" />
-        <path d="M 50,20 Q 70,40 40,90" stroke-dasharray="3 3" />
-        <circle cx="35" cy="55" r="1" fill="#8f9c8f" stroke="none" />
-        <circle cx="65" cy="85" r="1.5" fill="#8f9c8f" stroke="none" />
-      </g>
-    </svg>
-  </div>
+  <!-- Cabeçalho com Assinatura Minimalista -->
+  <header>
+    <div class="brand-name">
+      Maison Marini
+      <!-- A âncora usada apenas como detalhe gráfico sutil -->
+      <svg class="tiny-anchor" viewBox="0 0 24 24">
+        <circle cx="12" cy="5" r="3" />
+        <line x1="12" y1="8" x2="12" y2="21" />
+        <line x1="7" y1="12" x2="17" y2="12" />
+        <path d="M 5,16 C 5,23 19,23 19,16" />
+        <polyline points="3,14 5,16 7,14" />
+        <polyline points="17,14 19,16 21,14" />
+      </svg>
+      Lil Thalis
+    </div>
+    <div class="nav-links">Capsule 2035</div>
+  </header>
 
-  <!-- Capítulos Narrativos -->
-  <main>
-    <section class="chapter" id="chap-origin">
-      <div class="content-block">
-        <div class="chapter-subtitle">O Peso da Origem</div>
-        <h1 class="chapter-title">Das profundezas,<br>o ferro forjado.</h1>
-        <p class="chapter-text">Um marco silencioso sob a pressão das correntes. O início da colaboração Maison Marini ✕ Lil Thalis nasce não do ouro, mas do peso bruto da história. A âncora repousa, aguardando o despertar.</p>
-      </div>
-    </section>
+  <!-- Cena 1: ORIGEM -->
+  <section class="scene">
+    <div class="camera-rig">
+      <h1 class="monumental-text">Origem</h1>
+      <p class="subtext">A força invisível que molda a superfície. Onde a natureza e o corte perfeito se encontram no silêncio.</p>
+    </div>
+  </section>
 
-    <section class="chapter" id="chap-wind">
-      <div class="content-block">
-        <div class="chapter-subtitle">O Vento e a Forma</div>
-        <h2 class="chapter-title">Lapidada pelas<br>marés do tempo.</h2>
-        <p class="chapter-text">A oxidação cede ao polimento das águas. O design se revela através da subtração. Não há excessos, apenas a essência brilhante de um propósito inabalável. O luxo de suportar as tempestades com elegância.</p>
-      </div>
-    </section>
+  <!-- Cena 2: VISÃO -->
+  <section class="scene">
+    <div class="camera-rig">
+      <h1 class="monumental-text">Visão</h1>
+      <p class="subtext">Um olhar além do horizonte. O design contemporâneo elevado à sua essência mais pura.</p>
+    </div>
+  </section>
 
-    <section class="chapter" id="chap-nature">
-      <div class="content-block">
-        <div class="chapter-subtitle">A Raiz no Mar</div>
-        <h2 class="chapter-title">O aço encontra<br>o respiro da montanha.</h2>
-        <p class="chapter-text">A rigidez se curva ao abraço orgânico. Elementos da terra e do mar se entrelaçam. A obra humana não domina a natureza; ela faz as pazes com ela, tornando-se parte da paisagem imortal.</p>
-      </div>
-    </section>
+  <!-- Cena 3: 2035 -->
+  <section class="scene">
+    <div class="camera-rig">
+      <h1 class="monumental-text">2035</h1>
+      <p class="subtext">O compromisso com o amanhã. Sem ruídos, sem excessos. Apenas impacto regenerativo e precisão.</p>
+    </div>
+  </section>
 
-    <section class="chapter" id="chap-legacy">
-      <div class="content-block" id="legacy-block">
-        <div class="chapter-subtitle">O Legado</div>
-        <h2 class="chapter-title">Apenas o que importa<br>permanece.</h2>
-        <p class="chapter-text">Quando o silêncio se instala e a neblina dissipa, o símbolo resiste. Uma nova assinatura de luxo discreto para um futuro que respeita seu passado.</p>
-      </div>
-    </section>
-  </main>
+  <!-- Cena 4: LEGADO (Transição para Escuro) -->
+  <section class="scene dark-mode" id="legacy-scene">
+    <div class="camera-rig">
+      <h1 class="monumental-text">Legado</h1>
+      <p class="subtext">O que permanece quando a maré recua. Uma assinatura eterna sobre o tecido do tempo.</p>
+    </div>
+  </section>
 
   <script>
-    // Inicialização do Lenis (Smooth Scrolling Cinematográfico)
+    // 1. Configuração do Lenis (Scroll Cinemático)
     const lenis = new Lenis({
       duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Curva de easing estilo Apple
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
     });
 
     function raf(time) {
@@ -233,71 +234,105 @@
     }
     requestAnimationFrame(raf);
 
-    // Registro do ScrollTrigger
+    // 2. Registro do GSAP
     gsap.registerPlugin(ScrollTrigger);
 
-    // ==========================================================================
-    // Animações dos Textos (Microinterações: Fade In + Blur Remove)
-    // ==========================================================================
-    const contentBlocks = document.querySelectorAll('.content-block');
+    // 3. Sistema de Quebra de Texto (Divide as palavras gigantes em letras <span>)
+    const monumentalTexts = document.querySelectorAll('.monumental-text');
     
-    contentBlocks.forEach((block) => {
-      gsap.to(block, {
-        scrollTrigger: {
-          trigger: block,
-          start: "top 75%",
-          end: "top 25%",
-          scrub: 1, // Faz a animação ir e voltar com o scroll
-        },
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        ease: "power2.out"
-      });
+    monumentalTexts.forEach(textEl => {
+      const text = textEl.innerText;
+      textEl.innerHTML = ''; // Limpa o texto original
       
-      // Esmaecer ao sair da tela
-      gsap.to(block, {
-        scrollTrigger: {
-          trigger: block,
-          start: "bottom 30%",
-          end: "bottom 0%",
-          scrub: 1,
-        },
-        opacity: 0,
-        y: -40,
-        filter: "blur(10px)",
+      // Envolve cada letra em um span
+      text.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.innerText = char === ' ' ? '\u00A0' : char; // Respeita espaços
+        span.classList.add('char');
+        textEl.appendChild(span);
       });
     });
 
-    // ==========================================================================
-    // Evolução da Âncora e Troca de Cores de Fundo (A Narrativa Principal)
-    // ==========================================================================
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5, // Suavidade máxima atrelada ao scroll
+    // 4. A Coreografia Cinematográfica (Animação por Cena)
+    const scenes = document.querySelectorAll('.scene');
+
+    scenes.forEach((scene, index) => {
+      const chars = scene.querySelectorAll('.char');
+      const subtext = scene.querySelector('.subtext');
+      
+      // Cria a timeline atrelada ao scroll da seção
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: scene,
+          start: "top bottom",    // Começa quando a seção entra na tela
+          end: "bottom top",      // Termina quando a seção sai da tela
+          scrub: 1.2,             // Suavidade extrema (atraso no acompanhamento do scroll)
+        }
+      });
+
+      // ESTADO INICIAL (A câmera está longe, letras espalhadas e borradas)
+      tl.fromTo(chars, {
+        opacity: 0,
+        z: () => gsap.utils.random(400, 800), // Profundidade 3D aleatória
+        y: () => gsap.utils.random(-150, 150),
+        x: () => gsap.utils.random(-100, 100),
+        rotationX: () => gsap.utils.random(-90, 90),
+        rotationY: () => gsap.utils.random(-90, 90),
+        filter: "blur(20px)",
+      }, 
+      // ESTADO CENTRAL (Montagem perfeita no meio da tela)
+      {
+        opacity: 1,
+        z: 0,
+        y: 0,
+        x: 0,
+        rotationX: 0,
+        rotationY: 0,
+        filter: "blur(0px)",
+        stagger: { amount: 0.8, from: "center" }, // O efeito de ondas saindo do centro
+        ease: "power2.out",
+      }, 0.2); // Começa a 20% do scroll da cena
+
+      // Animação do Subtexto (Aparece logo após as letras se formarem)
+      tl.to(subtext, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "+=0.1");
+
+      // ESTADO FINAL (Desmontagem e desfoque quando passamos da cena)
+      // Só fazemos isso se não for a última cena
+      if (index !== scenes.length - 1) {
+        tl.to(chars, {
+          opacity: 0,
+          z: () => gsap.utils.random(-800, -400),
+          y: () => gsap.utils.random(-150, 150),
+          filter: "blur(15px)",
+          stagger: { amount: 0.5, from: "random" },
+          ease: "power2.in"
+        }, "+=0.3"); // Espera um pouco no meio da tela antes de desmontar
+        
+        tl.to(subtext, {
+          opacity: 0,
+          y: -30,
+          duration: 0.3
+        }, "<"); // Acontece junto com a desmontagem
       }
     });
 
-    // Estado 1: Para Capítulo 2 (Polimento Metálico + Fundo Oceano Profundo)
-    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-ocean)", ease: "none" }, "step1")
-            .to("#anchor-oxidized", { opacity: 0, ease: "none" }, "step1")
-            .to("#anchor-metallic", { opacity: 1, ease: "none" }, "step1")
-            .to("#anchor-canvas", { rotation: 10, scale: 1.1, ease: "power1.inOut" }, "step1");
-
-    // Estado 2: Para Capítulo 3 (Elemento Orgânico + Fundo Musgo/Névoa)
-    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-moss)", ease: "none" }, "step2")
-            .to("#anchor-organic", { opacity: 1, ease: "none" }, "step2")
-            .to("#anchor-canvas", { rotation: -5, scale: 0.95, ease: "power1.inOut" }, "step2");
-
-    // Estado 3: O Legado (Tudo Branco/Mist, Âncora limpa e minimalista no centro)
-    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-mist)", ease: "none" }, "step3")
-            .to("#anchor-organic", { stroke: "#a0aab2", ease: "none" }, "step3") // Raízes ficam metálicas
-            .to("#anchor-metallic", { stroke: "#1a2226", filter: "none", ease: "none" }, "step3") // Metal escurece sutilmente para contraste
-            .to("#anchor-canvas", { rotation: 0, scale: 0.8, y: -80, ease: "power2.out" }, "step3");
-            // Nota: o y: -80 sobe um pouco a âncora no fim para o texto final encaixar perfeitamente abaixo dela.
+    // 5. Iluminação Dinâmica Atrelada ao Mouse
+    const light = document.getElementById('ambientLight');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      // Move o gradiente radial sutilmente acompanhando o cursor
+      gsap.to(light, {
+        background: `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.9) 0%, rgba(247,246,242,1) 70%)`,
+        duration: 1,
+        ease: "power1.out"
+      });
+    });
 
   </script>
 </body>
