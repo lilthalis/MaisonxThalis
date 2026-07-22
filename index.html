@@ -3,417 +3,302 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini ✕ lil Thalis | 2030</title>
+  <title>Maison Marini ✕ Lil Thalis | O Legado</title>
+  
+  <!-- Tipografia Editorial Italiana e Minimalista -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- GSAP & Lenis via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
   <style>
+    /* ==========================================================================
+       Variáveis e Reset de Luxo Discreto
+       ========================================================================== */
     :root {
-      --bg-white: #ffffff;
-      --bg-pale-green: #f2f6f3;
-      --bg-dark: #0a0a0c;
-      --text-main: #1d1d1f;
-      --text-muted: #86868b;
-      --text-light: #f5f5f7;
-      --accent-green: #10b981;
-      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
-      --radius: 28px;
+      --color-abyss: #0a0b0c;
+      --color-oxidized: #2c251e;
+      --color-ocean: #1a2226;
+      --color-mist: #e2e4e3;
+      --color-moss: #c4cdc5;
+      --color-pure: #ffffff;
+      
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Lato', sans-serif;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
-      font-family: var(--font-family);
-      background-color: var(--bg-white);
-      color: var(--text-main);
+      font-family: var(--font-body);
+      background-color: var(--color-abyss);
+      color: var(--color-mist);
       overflow-x: hidden;
-      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    section {
+    /* ==========================================================================
+       A Âncora (Elemento Central Fixo)
+       ========================================================================== */
+    #anchor-canvas {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 400px;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .anchor-layer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Camadas de Evolução da Âncora em SVG */
+    #anchor-oxidized { opacity: 1; stroke: #4a3b2c; stroke-width: 4; fill: none; stroke-linecap: round; }
+    #anchor-metallic { opacity: 0; stroke: #d1d5d6; stroke-width: 3; fill: none; stroke-linecap: round; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+    #anchor-organic  { opacity: 0; stroke: #8f9c8f; stroke-width: 2; fill: none; stroke-linecap: round; }
+
+    /* ==========================================================================
+       Estrutura Cinematográfica (Capítulos)
+       ========================================================================== */
+    .chapter {
       position: relative;
-      width: 100%;
-      height: 100vh;
+      width: 100vw;
+      height: 150vh; /* Altura extra para permitir depth scrolling longo */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 0 5vw;
       text-align: center;
-      overflow: hidden;
+      z-index: 2;
     }
 
-    /* Utilidades de Animação ao Scroll */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      filter: blur(10px);
-      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-                  filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-
-    /* ==========================================================================
-       HERO SECTION
-       ========================================================================== */
-    .hero {
-      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%), 
-                  url('https://images.unsplash.com/photo-1511497584788-876761142212?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-      color: var(--text-light);
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 6rem);
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      max-width: 1000px;
-      margin-bottom: 24px;
-      line-height: 1.05;
-    }
-
-    .hero p {
-      font-size: clamp(1.1rem, 2vw, 1.6rem);
-      font-weight: 400;
-      color: rgba(245, 245, 247, 0.85);
+    .content-block {
       max-width: 600px;
-      letter-spacing: -0.01em;
+      padding: 0 20px;
+      opacity: 0; /* Começa invisível para o GSAP animar */
+      transform: translateY(40px);
+      filter: blur(10px);
     }
 
-    /* ==========================================================================
-       SEÇÃO 1 – O PROBLEMA
-       ========================================================================== */
-    .section-problem {
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      background-image: linear-gradient(to bottom, rgba(10,10,12,0.4), rgba(10,10,12,0.85)), 
-                        url('https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?q=80&w=2070&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
+    .chapter-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      margin-bottom: 24px;
+      color: rgba(255,255,255,0.5);
     }
 
-    .section-problem h2 {
-      font-size: clamp(2.2rem, 5vw, 5rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      max-width: 900px;
-    }
-
-    /* ==========================================================================
-       SEÇÃO 2 – A MUDANÇA
-       ========================================================================== */
-    .section-change {
-      background-color: var(--bg-pale-green);
-      color: var(--text-main);
-      background-image: linear-gradient(to bottom, rgba(242,246,243,0.3), rgba(242,246,243,0.9)), 
-                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2070&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .section-change h2 {
-      font-size: clamp(2.2rem, 5vw, 5rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      max-width: 900px;
-    }
-
-    /* ==========================================================================
-       SEÇÃO 3 – NÚMEROS
-       ========================================================================== */
-    .section-numbers {
-      background-color: var(--bg-white);
-      height: auto;
-      min-height: 100vh;
-      padding: 100px 5vw;
-    }
-
-    .numbers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-      width: 100%;
-      max-width: 1100px;
-      margin-top: 50px;
-    }
-
-    .number-card {
-      background: var(--bg-pale-green);
-      padding: 50px 30px;
-      border-radius: var(--radius);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.02);
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-
-    .number-card .icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    .number-card h3 {
-      font-size: clamp(3rem, 5vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-      color: var(--text-main);
-    }
-
-    .number-card p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* ==========================================================================
-       SEÇÃO 4 – LINHA DO TEMPO
-       ========================================================================== */
-    .section-timeline {
-      background-color: #fafafa;
-      height: auto;
-      min-height: 100vh;
-      padding: 100px 5vw;
-    }
-
-    .timeline-container {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      width: 100%;
-      max-width: 900px;
-      margin-top: 50px;
-      text-align: left;
-    }
-
-    .timeline-item {
-      background: var(--bg-white);
-      padding: 30px 40px;
-      border-radius: 20px;
-      border: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      opacity: 0.3;
-      transform: scale(0.98);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .timeline-item.active {
-      opacity: 1;
-      transform: scale(1);
-      border-color: var(--accent-green);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.08);
-    }
-
-    .timeline-year {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text-main);
-    }
-
-    .timeline-desc {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 500px;
-    }
-
-    /* ==========================================================================
-       SEÇÃO FINAL
-       ========================================================================== */
-    .section-final {
-      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.75)), 
-                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-      color: var(--text-light);
-    }
-
-    .section-final h2 {
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
-      font-weight: 600;
-      letter-spacing: -0.04em;
-      max-width: 900px;
-      margin-bottom: 16px;
-      line-height: 1.1;
-    }
-
-    .section-final p {
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    .chapter-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 400;
-      color: rgba(245, 245, 247, 0.9);
-      margin-bottom: 40px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-style: italic;
     }
 
-    .cta-button {
-      background-color: var(--bg-white);
-      color: var(--text-main);
-      padding: 18px 36px;
-      border-radius: 99px;
+    .chapter-text {
       font-size: 1.1rem;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: -0.01em;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+      line-height: 1.8;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
     }
 
-    .cta-button:hover {
-      transform: scale(1.05);
-      background-color: var(--text-light);
+    /* Cores e Fundos Transicionais por Capítulo */
+    #chap-origin { background-color: transparent; }
+    #chap-wind { background-color: transparent; }
+    #chap-nature { background-color: transparent; }
+    
+    #chap-legacy {
+      height: 100vh; /* Finaliza exatamente na tela */
+      background-color: var(--color-mist);
+      color: var(--color-abyss);
+    }
+    #chap-legacy .chapter-subtitle { color: rgba(0,0,0,0.4); }
+    #chap-legacy .chapter-text { color: rgba(0,0,0,0.6); }
+
+    /* Background dinâmico geral */
+    #dynamic-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: var(--color-abyss);
+      z-index: 0;
     }
 
-    /* Responsividade para telas menores */
-    @media (max-width: 768px) {
-      .timeline-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h1 class="reveal">O futuro começa com uma única escolha.</h1>
-    <p class="reveal">Cada pequena ação pode transformar o planeta de amanhã.</p>
-  </section>
+  <!-- Fundo que muda de cor suavemente via GSAP -->
+  <div id="dynamic-bg"></div>
 
-  <!-- SEÇÃO 1 – O PROBLEMA -->
-  <section class="section-problem">
-    <h2 class="reveal">“Todos os dias, o planeta pede ajuda.”</h2>
-  </section>
+  <!-- A Âncora Central Fixa -->
+  <div id="anchor-canvas">
+    <svg viewBox="0 0 100 150" class="anchor-layer">
+      <!-- Camada 1: Oxidada, Pesada, Escura -->
+      <g id="anchor-oxidized">
+        <circle cx="50" cy="20" r="10" />
+        <line x1="50" y1="30" x2="50" y2="120" />
+        <line x1="25" y1="50" x2="75" y2="50" />
+        <path d="M 20,100 C 20,140 80,140 80,100" />
+        <path d="M 15,95 L 25,105 M 85,95 L 75,105" />
+      </g>
+      <!-- Camada 2: Metálica, Polida, Brilhante -->
+      <g id="anchor-metallic">
+        <circle cx="50" cy="20" r="8" />
+        <line x1="50" y1="28" x2="50" y2="120" />
+        <line x1="30" y1="50" x2="70" y2="50" />
+        <path d="M 25,100 C 25,130 75,130 75,100" />
+        <polygon points="20,95 28,105 20,100" />
+        <polygon points="80,95 72,105 80,100" />
+      </g>
+      <!-- Camada 3: Orgânica, Raízes, Natureza -->
+      <g id="anchor-organic">
+        <!-- Detalhes de folhagens e vento abraçando o metal -->
+        <path d="M 45,30 Q 30,60 50,80 T 55,120" stroke-dasharray="4 2" />
+        <path d="M 50,20 Q 70,40 40,90" stroke-dasharray="3 3" />
+        <circle cx="35" cy="55" r="1" fill="#8f9c8f" stroke="none" />
+        <circle cx="65" cy="85" r="1.5" fill="#8f9c8f" stroke="none" />
+      </g>
+    </svg>
+  </div>
 
-  <!-- SEÇÃO 2 – A MUDANÇAZA -->
-  <section class="section-change">
-    <h2 class="reveal">“Pequenas atitudes criam grandes transformações.”</h2>
-  </section>
-
-  <!-- SEÇÃO 3 – NÚMEROS -->
-  <section class="section-numbers">
-    <span class="reveal" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 700;">Nosso Impacto</span>
-    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; margin-top: 10px;">Metas em Movimento</h2>
-    
-    <div class="numbers-grid">
-      <div class="number-card reveal">
-        <div class="icon">🌳</div>
-        <h3 class="counter" data-target="1500000">0</h3>
-        <p>Árvores preservadas e nativas plantadas em cadeias globais.</p>
+  <!-- Capítulos Narrativos -->
+  <main>
+    <section class="chapter" id="chap-origin">
+      <div class="content-block">
+        <div class="chapter-subtitle">O Peso da Origem</div>
+        <h1 class="chapter-title">Das profundezas,<br>o ferro forjado.</h1>
+        <p class="chapter-text">Um marco silencioso sob a pressão das correntes. O início da colaboração Maison Marini ✕ Lil Thalis nasce não do ouro, mas do peso bruto da história. A âncora repousa, aguardando o despertar.</p>
       </div>
+    </section>
 
-      <div class="number-card reveal">
-        <div class="icon">♻️</div>
-        <h3 class="counter" data-target="98">0</h3>
-        <p>% de resíduos recicláveis reutilizados na produção industrial.</p>
+    <section class="chapter" id="chap-wind">
+      <div class="content-block">
+        <div class="chapter-subtitle">O Vento e a Forma</div>
+        <h2 class="chapter-title">Lapidada pelas<br>marés do tempo.</h2>
+        <p class="chapter-text">A oxidação cede ao polimento das águas. O design se revela através da subtração. Não há excessos, apenas a essência brilhante de um propósito inabalável. O luxo de suportar as tempestades com elegância.</p>
       </div>
+    </section>
 
-      <div class="number-card reveal">
-        <div class="icon">🌎</div>
-        <h3 class="counter" data-target="500000">0</h3>
-        <p>Pessoas impactadas diretamente por programas de conscientização.</p>
+    <section class="chapter" id="chap-nature">
+      <div class="content-block">
+        <div class="chapter-subtitle">A Raiz no Mar</div>
+        <h2 class="chapter-title">O aço encontra<br>o respiro da montanha.</h2>
+        <p class="chapter-text">A rigidez se curva ao abraço orgânico. Elementos da terra e do mar se entrelaçam. A obra humana não domina a natureza; ela faz as pazes com ela, tornando-se parte da paisagem imortal.</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SEÇÃO 4 – LINHA DO TEMPO -->
-  <section class="section-timeline">
-    <span class="reveal" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 700;">Jornada Sustentável</span>
-    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; margin-top: 10px;">Rumo a 2035</h2>
-
-    <div class="timeline-container">
-      <div class="timeline-item reveal">
-        <span class="timeline-year">2028</span>
-        <span class="timeline-desc">Redução de 75% nas emissões líquidas de carbono em toda a cadeia produtiva integrada.</span>
+    <section class="chapter" id="chap-legacy">
+      <div class="content-block" id="legacy-block">
+        <div class="chapter-subtitle">O Legado</div>
+        <h2 class="chapter-title">Apenas o que importa<br>permanece.</h2>
+        <p class="chapter-text">Quando o silêncio se instala e a neblina dissipa, o símbolo resiste. Uma nova assinatura de luxo discreto para um futuro que respeita seu passado.</p>
       </div>
-      <div class="timeline-item reveal">
-        <span class="timeline-year">2030</span>
-        <span class="timeline-desc">100% de autonomia energética renovável em todas as centrais de fabricação e design.</span>
-      </div>
-      <div class="timeline-item reveal">
-        <span class="timeline-year">2035</span>
-        <span class="timeline-desc">Zero desperdício absoluto e impacto positivo regenerativo validado globalmente.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEÇÃO FINAL -->
-  <section class="section-final">
-    <h2 class="reveal">O planeta merece nossas melhores ideias.</h2>
-    <p class="reveal">E elas começam com você.</p>
-    <a href="#" class="cta-button reveal">Fazer parte da mudança</a>
-  </section>
+    </section>
+  </main>
 
   <script>
-    /* ==========================================================================
-       Microinterações e Animações ao Rolar (Scroll Reveal & Contadores)
-       ========================================================================== */
-    document.addEventListener("DOMContentLoaded", function() {
-      // Intersection Observer para elementos .reveal
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-      };
+    // Inicialização do Lenis (Smooth Scrolling Cinematográfico)
+    const lenis = new Lenis({
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
 
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            
-            // Ativar contadores se o elemento possuir
-            const counters = entry.target.querySelectorAll('.counter');
-            counters.forEach(counter => {
-              if(!counter.classList.contains('counted')) {
-                counter.classList.add('counted');
-                animateCounter(counter);
-              }
-            });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-            // Ativar itens da timeline dinamicamente
-            if(entry.target.classList.contains('timeline-item')) {
-              entry.target.classList.add('active');
-            }
-          }
-        });
-      }, observerOptions);
+    // Registro do ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
 
-      document.querySelectorAll('.reveal').forEach(el => {
-        observer.observe(el);
+    // ==========================================================================
+    // Animações dos Textos (Microinterações: Fade In + Blur Remove)
+    // ==========================================================================
+    const contentBlocks = document.querySelectorAll('.content-block');
+    
+    contentBlocks.forEach((block) => {
+      gsap.to(block, {
+        scrollTrigger: {
+          trigger: block,
+          start: "top 75%",
+          end: "top 25%",
+          scrub: 1, // Faz a animação ir e voltar com o scroll
+        },
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        ease: "power2.out"
       });
-
-      // Também observar itens da timeline separadamente para efeito cascata
-      document.querySelectorAll('.timeline-item').forEach(el => {
-        observer.observe(el);
+      
+      // Esmaecer ao sair da tela
+      gsap.to(block, {
+        scrollTrigger: {
+          trigger: block,
+          start: "bottom 30%",
+          end: "bottom 0%",
+          scrub: 1,
+        },
+        opacity: 0,
+        y: -40,
+        filter: "blur(10px)",
       });
+    });
 
-      // Função de animação de números progressivos
-      function animateCounter(element) {
-        const target = +element.getAttribute('data-target');
-        let count = 0;
-        const speed = target / 60; // Velocidade da contagem
-
-        function updateCount() {
-          count += speed;
-          if (count < target) {
-            element.innerText = Math.floor(count).toLocaleString('pt-BR');
-            setTimeout(updateCount, 25);
-          } else {
-            element.innerText = target.toLocaleString('pt-BR') + (target === 98 ? '%' : '+');
-          }
-        }
-        updateCount();
+    // ==========================================================================
+    // Evolução da Âncora e Troca de Cores de Fundo (A Narrativa Principal)
+    // ==========================================================================
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1.5, // Suavidade máxima atrelada ao scroll
       }
     });
+
+    // Estado 1: Para Capítulo 2 (Polimento Metálico + Fundo Oceano Profundo)
+    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-ocean)", ease: "none" }, "step1")
+            .to("#anchor-oxidized", { opacity: 0, ease: "none" }, "step1")
+            .to("#anchor-metallic", { opacity: 1, ease: "none" }, "step1")
+            .to("#anchor-canvas", { rotation: 10, scale: 1.1, ease: "power1.inOut" }, "step1");
+
+    // Estado 2: Para Capítulo 3 (Elemento Orgânico + Fundo Musgo/Névoa)
+    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-moss)", ease: "none" }, "step2")
+            .to("#anchor-organic", { opacity: 1, ease: "none" }, "step2")
+            .to("#anchor-canvas", { rotation: -5, scale: 0.95, ease: "power1.inOut" }, "step2");
+
+    // Estado 3: O Legado (Tudo Branco/Mist, Âncora limpa e minimalista no centro)
+    timeline.to("#dynamic-bg", { backgroundColor: "var(--color-mist)", ease: "none" }, "step3")
+            .to("#anchor-organic", { stroke: "#a0aab2", ease: "none" }, "step3") // Raízes ficam metálicas
+            .to("#anchor-metallic", { stroke: "#1a2226", filter: "none", ease: "none" }, "step3") // Metal escurece sutilmente para contraste
+            .to("#anchor-canvas", { rotation: 0, scale: 0.8, y: -80, ease: "power2.out" }, "step3");
+            // Nota: o y: -80 sobe um pouco a âncora no fim para o texto final encaixar perfeitamente abaixo dela.
+
   </script>
 </body>
 </html>
