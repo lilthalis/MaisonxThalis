@@ -3,337 +3,450 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini × Lil Thalis</title>
-
-  <!-- Tipografia: Serifas monumentais para os títulos e Sans-serif limpa para UI -->
+  <title>Capsule 2035 | Maison Marini ✕ Lil Thalis</title>
+  
+  <!-- Fonte do Sistema (Idêntico ao padrão Apple San Francisco) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- GSAP & Lenis via CDN -->
+  <!-- GSAP & Lenis -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
 
   <style>
     /* ==========================================================================
-       Variáveis e Reset de Luxo Editorial
+       Variáveis e Estilo Global Estilo Apple
        ========================================================================== */
     :root {
-      --bg-color: #f7f6f2; /* Tom de papel italiano/pergaminho */
-      --text-color: #1a1a1a;
-      --accent-color: #3b4238; /* Verde musgo profundo e desbotado */
-      
-      --font-display: 'Cormorant Garamond', serif;
-      --font-ui: 'Inter', sans-serif;
+      --bg-color: #f5f5f7;
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --accent: #00a845; /* Verde inspirado no tema ambiente da Apple */
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      font-family: var(--font-ui);
+      font-family: var(--font-family);
       background-color: var(--bg-color);
-      color: var(--text-color);
+      color: var(--text-main);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      letter-spacing: -0.015em;
     }
 
-    /* Efeito de Iluminação Dinâmica ao Fundo */
-    .ambient-light {
+    /* Menu Superior */
+    nav {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(247,246,242,1) 80%);
-      z-index: -1;
-      pointer-events: none;
+      top: 0; width: 100%;
+      height: 52px;
+      background: rgba(245, 245, 247, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    nav span {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.8);
     }
 
     /* ==========================================================================
-       Header Minimalista & Assinatura da Âncora
+       HERO SECTION (O logo animado e as montanhas)
        ========================================================================== */
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      padding: 30px 4vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      mix-blend-mode: difference;
-      color: #fff;
-    }
-
-    .brand-name {
-      font-family: var(--font-ui);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .tiny-anchor {
-      width: 12px;
-      height: 12px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .nav-links {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* ==========================================================================
-       Seções Cinematográficas
-       ========================================================================== */
-    .scene {
+    .hero {
       position: relative;
-      width: 100vw;
-      height: 150vh; /* Altura extra para longo tempo de scroll */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 20vh;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.5)), 
+                  url('https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?q=80&w=2070&auto=format&fit=crop') center bottom / cover no-repeat;
+    }
+
+    /* O Logo "2035" Dinâmico */
+    .kinetic-logo {
+      display: flex;
+      align-items: center;
+      font-size: clamp(4rem, 12vw, 10rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    
+    .kinetic-logo span {
+      display: inline-block;
+      transform-origin: center;
+    }
+
+    /* Os símbolos que giram/pulsam substituindo letras */
+    .symbol {
+      color: var(--accent);
+      margin: 0 5px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.5rem, 4vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-top: 10px;
+      max-width: 800px;
+      text-align: center;
+      line-height: 1.1;
+      padding: 0 20px;
+    }
+
+    /* ==========================================================================
+       SEÇÃO ESCURA PINNED (Igual ao "Inovações em alta")
+       ========================================================================== */
+    .dark-reveal-section {
+      background-color: #000;
+      color: #fff;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      padding: 0 5vw;
+      background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1511497584788-876761142212?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .dark-title {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 30px;
+    }
+
+    .reveal-text-container {
+      max-width: 800px;
+      font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+      font-weight: 600;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.2); /* Começa apagado */
+    }
+
+    /* ==========================================================================
+       CARROSSEL HORIZONTAL (O objetivo que engloba tudo)
+       ========================================================================== */
+    .carousel-section {
+      padding: 100px 0;
+      background: var(--bg-color);
       overflow: hidden;
     }
 
-    /* O invólucro da câmera virtual */
-    .camera-rig {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
+    .carousel-header {
+      padding: 0 5vw;
+      max-width: 900px;
+      margin-bottom: 60px;
+    }
+
+    .carousel-header h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      gap: 20px;
+      padding: 0 5vw;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none; /* Oculta scrollbar no Firefox */
+    }
+    .cards-wrapper::-webkit-scrollbar { display: none; } /* Oculta scrollbar Chrome/Safari */
+
+    .card {
+      min-width: 320px;
+      max-width: 400px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .card .icon-box {
+      margin-top: 40px;
+      height: 150px;
+      background: var(--bg-color);
+      border-radius: 12px;
+      display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 3rem;
     }
 
-    /* A Tipografia Monumental */
-    .monumental-text {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 15vw, 16rem);
-      font-weight: 300;
-      text-transform: uppercase;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      color: var(--text-color);
-      margin: 0;
-      padding: 0;
-      white-space: nowrap;
-      perspective: 1000px; /* Para o efeito 3D das letras */
+    /* ==========================================================================
+       ESTATÍSTICAS GIGANTES
+       ========================================================================== */
+    .stats-section {
+      padding: 120px 5vw;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 80px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    /* As letras individuais geradas via JS */
-    .char {
-      display: inline-block;
-      will-change: transform, opacity, filter;
-      transform-style: preserve-3d;
-      transform-origin: center center;
+    .stat-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
     }
 
-    /* O Subtexto Editorial */
-    .subtext {
-      font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2vw, 1.8rem);
-      font-style: italic;
-      color: var(--accent-color);
-      margin-top: 2rem;
-      max-width: 500px;
-      opacity: 0; /* Animado via GSAP */
-      transform: translateY(30px);
+    .stat-number {
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
-    /* Estilo invertido para a cena final (Legado) */
-    .scene.dark-mode {
-      background-color: #121212;
-      color: #e5e5e5;
+    .stat-icon {
+      color: var(--accent);
+      font-size: clamp(2rem, 5vw, 4rem);
     }
-    .scene.dark-mode .monumental-text { color: #e5e5e5; }
-    .scene.dark-mode .subtext { color: #a5a5a5; }
 
+    .stat-desc {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-top: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       TEXTO GIGANTE COM COR (Projetados, compostos...)
+       ========================================================================== */
+    .big-text-section {
+      padding: 150px 5vw;
+      background: var(--bg-color);
+      text-align: left;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .big-text-section h2 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--accent);
+    }
+
+    .big-text-section p {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 500;
+      margin-top: 30px;
+      max-width: 800px;
+      color: var(--text-main);
+    }
   </style>
 </head>
 <body>
 
-  <!-- Iluminação Dinâmica de Fundo -->
-  <div class="ambient-light" id="ambientLight"></div>
+  <nav>
+    <span>MAISON MARINI ✕ LIL THALIS</span>
+  </nav>
 
-  <!-- Cabeçalho com Assinatura Minimalista -->
-  <header>
-    <div class="brand-name">
-      Maison Marini
-      <!-- A âncora usada apenas como detalhe gráfico sutil -->
-      <svg class="tiny-anchor" viewBox="0 0 24 24">
-        <circle cx="12" cy="5" r="3" />
-        <line x1="12" y1="8" x2="12" y2="21" />
-        <line x1="7" y1="12" x2="17" y2="12" />
-        <path d="M 5,16 C 5,23 19,23 19,16" />
-        <polyline points="3,14 5,16 7,14" />
-        <polyline points="17,14 19,16 21,14" />
-      </svg>
-      Lil Thalis
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <!-- O logo com elementos que giram -->
+    <div class="kinetic-logo">
+      <span class="char">2</span>
+      <span class="char symbol" id="spin-icon">✺</span>
+      <span class="char">3</span>
+      <span class="char">5</span>
     </div>
-    <div class="nav-links">Capsule 2035</div>
-  </header>
+    <h1 class="hero-subtitle">O luxo merece nossas melhores ideias.</h1>
+  </section>
 
-  <!-- Cena 1: ORIGEM -->
-  <section class="scene">
-    <div class="camera-rig">
-      <h1 class="monumental-text">Origem</h1>
-      <p class="subtext">A força invisível que molda a superfície. Onde a natureza e o corte perfeito se encontram no silêncio.</p>
+  <!-- SEÇÃO ESCURA (Texto que acende no scroll) -->
+  <section class="dark-reveal-section">
+    <div class="dark-content">
+      <h2 class="dark-title">Estética em alta.<br>Emissões em baixa.</h2>
+      <div class="reveal-text-container" id="reveal-text">
+        Estamos mais perto do que nunca da nossa meta para 2035. O objetivo é reduzir as emissões em toda a nossa cadeia global, repensando cada tecido e cada corte antes de compensar os resíduos com soluções baseadas na natureza.
+      </div>
     </div>
   </section>
 
-  <!-- Cena 2: VISÃO -->
-  <section class="scene">
-    <div class="camera-rig">
-      <h1 class="monumental-text">Visão</h1>
-      <p class="subtext">Um olhar além do horizonte. O design contemporâneo elevado à sua essência mais pura.</p>
+  <!-- CARROSSEL HORIZONTAL -->
+  <section class="carousel-section">
+    <div class="carousel-header">
+      <h2>Um objetivo que engloba tudo.<br>Do design ao tecido.</h2>
+    </div>
+    <div class="cards-wrapper">
+      <div class="card">
+        <h3>Design e origem.</h3>
+        <p>Mais componentes nas nossas coleções agora são feitos com materiais reciclados, como o algodão orgânico, que é 100% reutilizado.</p>
+        <div class="icon-box">♻️</div>
+      </div>
+      <div class="card">
+        <h3>Produção.</h3>
+        <p>Em 2028, nosso programa de energia limpa gerou energia suficiente para suprir todas as máquinas de costura da nossa fábrica principal.</p>
+        <div class="icon-box">☀️</div>
+      </div>
+      <div class="card">
+        <h3>Embalagem e transporte.</h3>
+        <p>As novas caixas da Capsule foram projetadas para serem dobráveis, o que facilita o transporte e elimina o uso de plásticos de uso único.</p>
+        <div class="icon-box">📦</div>
+      </div>
+      <div class="card">
+        <h3>Recuperação.</h3>
+        <p>Devolva suas peças antigas. Proteja os recursos valiosos do planeta reciclando o que você não usa mais em nossas lojas conceito.</p>
+        <div class="icon-box">🔄</div>
+      </div>
     </div>
   </section>
 
-  <!-- Cena 3: 2035 -->
-  <section class="scene">
-    <div class="camera-rig">
-      <h1 class="monumental-text">2035</h1>
-      <p class="subtext">O compromisso com o amanhã. Sem ruídos, sem excessos. Apenas impacto regenerativo e precisão.</p>
-    </div>
+  <!-- TEXTO GIGANTE COLORIDO -->
+  <section class="big-text-section">
+    <h2 class="gsap-up">Projetados, compostos e feitos para durar.</h2>
+    <p class="gsap-up">Nossas roupas são desenhadas pensando no meio ambiente. Isso começa com o uso rigoroso de materiais reciclados e obtidos de fontes renováveis exclusivas da Itália e do Brasil.</p>
   </section>
 
-  <!-- Cena 4: LEGADO (Transição para Escuro) -->
-  <section class="scene dark-mode" id="legacy-scene">
-    <div class="camera-rig">
-      <h1 class="monumental-text">Legado</h1>
-      <p class="subtext">O que permanece quando a maré recua. Uma assinatura eterna sobre o tecido do tempo.</p>
+  <!-- ESTATÍSTICAS GIGANTES -->
+  <section class="stats-section">
+    <div class="stat-block gsap-up">
+      <div class="stat-number">
+        <span class="stat-icon">♻️</span> 60%
+      </div>
+      <p class="stat-desc">do conteúdo das novas jaquetas é totalmente reciclado, mais do que qualquer outra peça da nossa história.</p>
+    </div>
+
+    <div class="stat-block gsap-up">
+      <div class="stat-number">
+        <span class="stat-icon">↓</span> 50%
+      </div>
+      <p class="stat-desc">menos água utilizada na fabricação e no tingimento das fibras, utilizando um processo de moldagem inovador.</p>
+    </div>
+
+    <div class="stat-block gsap-up">
+      <div class="stat-number">
+        <span class="stat-icon">💧</span> 70%
+      </div>
+      <p class="stat-desc">de taxa de reutilização da água durante a lavagem dos tecidos pesados em nossa matriz.</p>
     </div>
   </section>
 
   <script>
-    // 1. Configuração do Lenis (Scroll Cinemático)
+    // 1. Lenis Smooth Scrolling (A mesma suavidade da Apple)
     const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Curva de easing estilo Apple
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
-      mouseMultiplier: 1,
     });
-
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
 
-    // 2. Registro do GSAP
     gsap.registerPlugin(ScrollTrigger);
 
-    // 3. Sistema de Quebra de Texto (Divide as palavras gigantes em letras <span>)
-    const monumentalTexts = document.querySelectorAll('.monumental-text');
-    
-    monumentalTexts.forEach(textEl => {
-      const text = textEl.innerText;
-      textEl.innerHTML = ''; // Limpa o texto original
-      
-      // Envolve cada letra em um span
-      text.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.innerText = char === ' ' ? '\u00A0' : char; // Respeita espaços
-        span.classList.add('char');
-        textEl.appendChild(span);
-      });
+    // 2. Animação do "Logo" 2035 no topo
+    // Faz o símbolo ✺ girar continuamente
+    gsap.to("#spin-icon", {
+      rotation: 360,
+      duration: 10,
+      repeat: -1,
+      ease: "linear"
     });
-
-    // 4. A Coreografia Cinematográfica (Animação por Cena)
-    const scenes = document.querySelectorAll('.scene');
-
-    scenes.forEach((scene, index) => {
-      const chars = scene.querySelectorAll('.char');
-      const subtext = scene.querySelector('.subtext');
-      
-      // Cria a timeline atrelada ao scroll da seção
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: scene,
-          start: "top bottom",    // Começa quando a seção entra na tela
-          end: "bottom top",      // Termina quando a seção sai da tela
-          scrub: 1.2,             // Suavidade extrema (atraso no acompanhamento do scroll)
-        }
-      });
-
-      // ESTADO INICIAL (A câmera está longe, letras espalhadas e borradas)
-      tl.fromTo(chars, {
-        opacity: 0,
-        z: () => gsap.utils.random(400, 800), // Profundidade 3D aleatória
-        y: () => gsap.utils.random(-150, 150),
-        x: () => gsap.utils.random(-100, 100),
-        rotationX: () => gsap.utils.random(-90, 90),
-        rotationY: () => gsap.utils.random(-90, 90),
-        filter: "blur(20px)",
-      }, 
-      // ESTADO CENTRAL (Montagem perfeita no meio da tela)
-      {
-        opacity: 1,
-        z: 0,
-        y: 0,
-        x: 0,
-        rotationX: 0,
-        rotationY: 0,
-        filter: "blur(0px)",
-        stagger: { amount: 0.8, from: "center" }, // O efeito de ondas saindo do centro
-        ease: "power2.out",
-      }, 0.2); // Começa a 20% do scroll da cena
-
-      // Animação do Subtexto (Aparece logo após as letras se formarem)
-      tl.to(subtext, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "+=0.1");
-
-      // ESTADO FINAL (Desmontagem e desfoque quando passamos da cena)
-      // Só fazemos isso se não for a última cena
-      if (index !== scenes.length - 1) {
-        tl.to(chars, {
-          opacity: 0,
-          z: () => gsap.utils.random(-800, -400),
-          y: () => gsap.utils.random(-150, 150),
-          filter: "blur(15px)",
-          stagger: { amount: 0.5, from: "random" },
-          ease: "power2.in"
-        }, "+=0.3"); // Espera um pouco no meio da tela antes de desmontar
-        
-        tl.to(subtext, {
-          opacity: 0,
-          y: -30,
-          duration: 0.3
-        }, "<"); // Acontece junto com a desmontagem
+    // Efeito Parallax no título ao rolar para baixo
+    gsap.to(".kinetic-logo", {
+      y: 150,
+      scale: 1.1,
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
       }
     });
 
-    // 5. Iluminação Dinâmica Atrelada ao Mouse
-    const light = document.getElementById('ambientLight');
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      // Move o gradiente radial sutilmente acompanhando o cursor
-      gsap.to(light, {
-        background: `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.9) 0%, rgba(247,246,242,1) 70%)`,
-        duration: 1,
-        ease: "power1.out"
-      });
+    // 3. O EFEITO DE TEXTO QUE ACENDE NO ESCURO
+    // Para recriar o efeito de "ler conforme rola", vamos animar a cor do texto
+    const splitText = document.getElementById('reveal-text');
+    const textContent = splitText.innerText;
+    splitText.innerHTML = '';
+    
+    // Dividir o texto em palavras para iluminar uma por uma
+    textContent.split(' ').forEach(word => {
+      const span = document.createElement('span');
+      span.innerText = word + ' ';
+      span.style.color = 'rgba(255, 255, 255, 0.2)';
+      splitText.appendChild(span);
     });
 
+    const words = splitText.querySelectorAll('span');
+
+    // Prende (Pin) a seção escura na tela enquanto as palavras acendem
+    gsap.to(words, {
+      color: 'rgba(255, 255, 255, 1)',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".dark-reveal-section",
+        start: "center center",
+        end: "+=150%", // Mantém a tela presa por mais tempo
+        pin: true,
+        scrub: 1
+      }
+    });
+
+    // 4. Efeito de surgimento suave para os blocos de texto normais
+    const upElements = document.querySelectorAll('.gsap-up');
+    upElements.forEach(el => {
+      gsap.fromTo(el, 
+        { y: 50, opacity: 0 },
+        { 
+          y: 0, opacity: 1, duration: 1, ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+          }
+        }
+      );
+    });
   </script>
 </body>
 </html>
