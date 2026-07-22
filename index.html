@@ -3,317 +3,417 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini ✕ lil Thalis | Colaboração 2030</title>
+  <title>Maison Marini ✕ lil Thalis | 2030</title>
   <style>
     :root {
-      --bg-color: #f5f5f7;
-      --card-bg: rgba(255, 255, 255, 0.85);
+      --bg-white: #ffffff;
+      --bg-pale-green: #f2f6f3;
+      --bg-dark: #0a0a0c;
       --text-main: #1d1d1f;
       --text-muted: #86868b;
-      --accent: #10b981; /* Verde sustentável elegante */
-      --font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      --radius: 24px;
+      --text-light: #f5f5f7;
+      --accent-green: #10b981;
+      --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+      --radius: 28px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: var(--font-family);
-      background-color: var(--bg-color);
+      background-color: var(--bg-white);
       color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-      padding-bottom: 80px;
+      overflow-x: hidden;
+      line-height: 1.4;
     }
 
-    /* Topo Imersivo */
-    .hero {
+    section {
       position: relative;
-      height: 45vh;
-      min-height: 380px;
-      background: linear-gradient(to bottom, rgba(245,245,247,0) 40%, rgba(245,245,247,1) 100%), 
-                  url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      width: 100%;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      padding-bottom: 30px;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      color: var(--text-main);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 10px;
-    }
-
-    .social-links a {
-      width: 42px;
-      height: 42px;
-      background: var(--text-main);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 0.75rem;
-      font-weight: bold;
-      text-decoration: none;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .social-links a:hover { 
-      transform: scale(1.08); 
-      background: #333;
-    }
-
-    /* Wrapper Principal */
-    .content-wrapper {
-      width: min(90vw, 920px);
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-    }
-
-    .section-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      font-weight: 700;
-      margin-bottom: 16px;
-      padding-left: 8px;
-    }
-
-    /* Grades inteligentes */
-    .links-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media(min-width: 768px) {
-      .links-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    /* Cartão de Doação / Meta (Estilo Crowdfunding) */
-    .funding-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 24px;
-      border-radius: var(--radius);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      border: 1px solid rgba(255,255,255,0.6);
-      grid-column: 1 / -1; /* Ocupa a largura inteira */
-    }
-
-    .funding-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 10px;
-      background: #e5e5ea;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .progress-fill {
-      width: 68%; /* Porcentagem atingida */
-      height: 100%;
-      background: var(--text-main);
-      border-radius: 10px;
-    }
-
-    .support-btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      background: var(--text-main);
-      color: white;
-      text-align: center;
-      border-radius: 16px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .support-btn:hover {
-      background: #333;
-      transform: translateY(-2px);
-    }
-
-    /* Cartões de Links Padrão */
-    .link-card {
-      display: flex;
       align-items: center;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 18px;
-      border-radius: var(--radius);
-      text-decoration: none;
-      color: var(--text-main);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      border: 1px solid rgba(255,255,255,0.6);
-      transition: transform 0.3s cubic-bezier(.19,1,.22,1), box-shadow 0.3s cubic-bezier(.19,1,.22,1);
+      padding: 0 5vw;
+      text-align: center;
+      overflow: hidden;
     }
 
-    .link-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.07);
+    /* Utilidades de Animação ao Scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      filter: blur(10px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                  filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .link-image {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      background-color: #ddd;
-      margin-right: 18px;
-      object-fit: cover;
-      flex-shrink: 0;
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
     }
 
-    .link-text h3 {
-      font-size: 1.15rem;
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%), 
+                  url('https://images.unsplash.com/photo-1511497584788-876761142212?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      color: var(--text-light);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 6rem);
       font-weight: 600;
-      margin-bottom: 4px;
+      letter-spacing: -0.04em;
+      max-width: 1000px;
+      margin-bottom: 24px;
+      line-height: 1.05;
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 400;
+      color: rgba(245, 245, 247, 0.85);
+      max-width: 600px;
       letter-spacing: -0.01em;
     }
 
-    .link-text p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
+    /* ==========================================================================
+       SEÇÃO 1 – O PROBLEMA
+       ========================================================================== */
+    .section-problem {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      background-image: linear-gradient(to bottom, rgba(10,10,12,0.4), rgba(10,10,12,0.85)), 
+                        url('https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
     }
 
-    /* Cartão de Vídeo */
-    .video-card {
+    .section-problem h2 {
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+    }
+
+    /* ==========================================================================
+       SEÇÃO 2 – A MUDANÇA
+       ========================================================================== */
+    .section-change {
+      background-color: var(--bg-pale-green);
+      color: var(--text-main);
+      background-image: linear-gradient(to bottom, rgba(242,246,243,0.3), rgba(242,246,243,0.9)), 
+                        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-change h2 {
+      font-size: clamp(2.2rem, 5vw, 5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+    }
+
+    /* ==========================================================================
+       SEÇÃO 3 – NÚMEROS
+       ========================================================================== */
+    .section-numbers {
+      background-color: var(--bg-white);
+      height: auto;
+      min-height: 100vh;
+      padding: 100px 5vw;
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
       width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
+      max-width: 1100px;
+      margin-top: 50px;
+    }
+
+    .number-card {
+      background: var(--bg-pale-green);
+      padding: 50px 30px;
       border-radius: var(--radius);
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+      border: 1px solid rgba(0,0,0,0.04);
     }
 
-    .video-card img {
+    .number-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .number-card h3 {
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .number-card p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       SEÇÃO 4 – LINHA DO TEMPO
+       ========================================================================== */
+    .section-timeline {
+      background-color: #fafafa;
+      height: auto;
+      min-height: 100vh;
+      padding: 100px 5vw;
+    }
+
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.85;
+      max-width: 900px;
+      margin-top: 50px;
+      text-align: left;
     }
 
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 68px;
-      height: 68px;
-      background: rgba(255,255,255,0.92);
-      border-radius: 50%;
+    .timeline-item {
+      background: var(--bg-white);
+      padding: 30px 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.06);
       display: flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+      justify-content: space-between;
+      opacity: 0.3;
+      transform: scale(0.98);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .video-card:hover .play-button {
-      transform: translate(-50%, -50%) scale(1.08);
+    .timeline-item.active {
+      opacity: 1;
+      transform: scale(1);
+      border-color: var(--accent-green);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.08);
     }
 
-    .play-button::after {
-      content: '';
-      border-style: solid;
-      border-width: 10px 0 10px 16px;
-      border-color: transparent transparent transparent var(--text-main);
-      margin-left: 4px;
+    .timeline-year {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .timeline-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+    }
+
+    /* ==========================================================================
+       SEÇÃO FINAL
+       ========================================================================== */
+    .section-final {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.75)), 
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      color: var(--text-light);
+    }
+
+    .section-final h2 {
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .section-final p {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      color: rgba(245, 245, 247, 0.9);
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      background-color: var(--bg-white);
+      color: var(--text-main);
+      padding: 18px 36px;
+      border-radius: 99px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      background-color: var(--text-light);
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 768px) {
+      .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Topo -->
-  <header class="hero">
-    <h1 class="hero-title">Maison Marini ✕ lil Thalis</h1>
-    <div class="social-links">
-      <a href="https://instagram.com" target="_blank">IG</a>
-      <a href="https://tiktok.com" target="_blank">TT</a>
-      <a href="https://youtube.com" target="_blank">YT</a>
-    </div>
-  </header>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1 class="reveal">O futuro começa com uma única escolha.</h1>
+    <p class="reveal">Cada pequena ação pode transformar o planeta de amanhã.</p>
+  </section>
 
-  <main class="content-wrapper">
+  <!-- SEÇÃO 1 – O PROBLEMA -->
+  <section class="section-problem">
+    <h2 class="reveal">“Todos os dias, o planeta pede ajuda.”</h2>
+  </section>
+
+  <!-- SEÇÃO 2 – A MUDANÇAZA -->
+  <section class="section-change">
+    <h2 class="reveal">“Pequenas atitudes criam grandes transformações.”</h2>
+  </section>
+
+  <!-- SEÇÃO 3 – NÚMEROS -->
+  <section class="section-numbers">
+    <span class="reveal" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 700;">Nosso Impacto</span>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; margin-top: 10px;">Metas em Movimento</h2>
     
-    <!-- Seção de Apoio / Financiamento Coletivo -->
-    <section>
-      <h2 class="section-title">Financiamento Coletivo & Apoio</h2>
-      <div class="funding-card">
-        <div class="funding-info">
-          <span>Meta da Coleção 2030</span>
-          <span>68% Atingido</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
-        </div>
-        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
-          Ajude a financiar a produção piloto dos primeiros tecidos 100% reciclados da nossa collab.
-        </p>
-        <a href="#" class="support-btn">Apoiar Projeto / Fazer Doação</a>
+    <div class="numbers-grid">
+      <div class="number-card reveal">
+        <div class="icon">🌳</div>
+        <h3 class="counter" data-target="1500000">0</h3>
+        <p>Árvores preservadas e nativas plantadas em cadeias globais.</p>
       </div>
-    </section>
 
-    <!-- Seção O Futuro -->
-    <section>
-      <h2 class="section-title">O Futuro</h2>
-      <div class="links-grid">
-        <a href="#" class="link-card">
-          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Manifesto">
-          <div class="link-text">
-            <h3>Missão Carbono Zero</h3>
-            <p>Leia nosso manifesto sustentável</p>
-          </div>
-        </a>
-
-        <a href="#" class="link-card">
-          <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Parceria">
-          <div class="link-text">
-            <h3>Seja um Colaborador</h3>
-            <p>Propostas de parceria e marcas</p>
-          </div>
-        </a>
+      <div class="number-card reveal">
+        <div class="icon">♻️</div>
+        <h3 class="counter" data-target="98">0</h3>
+        <p>% de resíduos recicláveis reutilizados na produção industrial.</p>
       </div>
-    </section>
 
-    <!-- Seção de Mídia -->
-    <section>
-      <h2 class="section-title">Campanha Visual</h2>
-      <div class="video-card">
-        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop" alt="Video cover">
-        <div class="play-button"></div>
+      <div class="number-card reveal">
+        <div class="icon">🌎</div>
+        <h3 class="counter" data-target="500000">0</h3>
+        <p>Pessoas impactadas diretamente por programas de conscientização.</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- SEÇÃO 4 – LINHA DO TEMPO -->
+  <section class="section-timeline">
+    <span class="reveal" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); font-weight: 700;">Jornada Sustentável</span>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; margin-top: 10px;">Rumo a 2035</h2>
 
+    <div class="timeline-container">
+      <div class="timeline-item reveal">
+        <span class="timeline-year">2028</span>
+        <span class="timeline-desc">Redução de 75% nas emissões líquidas de carbono em toda a cadeia produtiva integrada.</span>
+      </div>
+      <div class="timeline-item reveal">
+        <span class="timeline-year">2030</span>
+        <span class="timeline-desc">100% de autonomia energética renovável em todas as centrais de fabricação e design.</span>
+      </div>
+      <div class="timeline-item reveal">
+        <span class="timeline-year">2035</span>
+        <span class="timeline-desc">Zero desperdício absoluto e impacto positivo regenerativo validado globalmente.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO FINAL -->
+  <section class="section-final">
+    <h2 class="reveal">O planeta merece nossas melhores ideias.</h2>
+    <p class="reveal">E elas começam com você.</p>
+    <a href="#" class="cta-button reveal">Fazer parte da mudança</a>
+  </section>
+
+  <script>
+    /* ==========================================================================
+       Microinterações e Animações ao Rolar (Scroll Reveal & Contadores)
+       ========================================================================== */
+    document.addEventListener("DOMContentLoaded", function() {
+      // Intersection Observer para elementos .reveal
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            
+            // Ativar contadores se o elemento possuir
+            const counters = entry.target.querySelectorAll('.counter');
+            counters.forEach(counter => {
+              if(!counter.classList.contains('counted')) {
+                counter.classList.add('counted');
+                animateCounter(counter);
+              }
+            });
+
+            // Ativar itens da timeline dinamicamente
+            if(entry.target.classList.contains('timeline-item')) {
+              entry.target.classList.add('active');
+            }
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Também observar itens da timeline separadamente para efeito cascata
+      document.querySelectorAll('.timeline-item').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Função de animação de números progressivos
+      function animateCounter(element) {
+        const target = +element.getAttribute('data-target');
+        let count = 0;
+        const speed = target / 60; // Velocidade da contagem
+
+        function updateCount() {
+          count += speed;
+          if (count < target) {
+            element.innerText = Math.floor(count).toLocaleString('pt-BR');
+            setTimeout(updateCount, 25);
+          } else {
+            element.innerText = target.toLocaleString('pt-BR') + (target === 98 ? '%' : '+');
+          }
+        }
+        updateCount();
+      }
+    });
+  </script>
 </body>
 </html>
