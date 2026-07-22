@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini ✕ lil Thalis | Hub</title>
+  <title>Maison Marini ✕ lil Thalis | Colaboração 2030</title>
   <style>
-    /* ==========================================================================
-       Variáveis e Estética Apple (Ajustada para Fluidez)
-       ========================================================================== */
     :root {
       --bg-color: #f5f5f7;
       --card-bg: rgba(255, 255, 255, 0.85);
       --text-main: #1d1d1f;
       --text-muted: #86868b;
+      --accent: #10b981; /* Verde sustentável elegante */
       --font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
       --radius: 24px;
     }
@@ -27,13 +25,11 @@
       padding-bottom: 80px;
     }
 
-    /* ==========================================================================
-       Hero Section (Topo Imersivo)
-       ========================================================================== */
+    /* Topo Imersivo */
     .hero {
       position: relative;
-      height: 48vh;
-      min-height: 400px;
+      height: 45vh;
+      min-height: 380px;
       background: linear-gradient(to bottom, rgba(245,245,247,0) 40%, rgba(245,245,247,1) 100%), 
                   url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
       display: flex;
@@ -45,14 +41,13 @@
     }
 
     .hero-title {
-      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 600;
       letter-spacing: -0.03em;
       margin-bottom: 16px;
       color: var(--text-main);
     }
 
-    /* Redes Sociais (Agora com links interativos reais) */
     .social-links {
       display: flex;
       gap: 16px;
@@ -60,15 +55,15 @@
     }
 
     .social-links a {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       background: var(--text-main);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
       text-decoration: none;
       transition: transform 0.2s ease, background 0.2s ease;
@@ -79,16 +74,14 @@
       background: #333;
     }
 
-    /* ==========================================================================
-       Conteúdo Principal (Expandido para monitores grandes)
-       ========================================================================== */
+    /* Wrapper Principal */
     .content-wrapper {
-      width: min(90vw, 920px); /* Ocupa o espaço ideal sem esticar demais */
+      width: min(90vw, 920px);
       margin: 0 auto;
       padding: 0 20px;
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 36px;
     }
 
     .section-title {
@@ -101,7 +94,7 @@
       padding-left: 8px;
     }
 
-    /* Grade Inteligente: 1 coluna no celular, 2 colunas no PC */
+    /* Grades inteligentes */
     .links-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -114,7 +107,60 @@
       }
     }
 
-    /* Cartões de Links */
+    /* Cartão de Doação / Meta (Estilo Crowdfunding) */
+    .funding-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      border: 1px solid rgba(255,255,255,0.6);
+      grid-column: 1 / -1; /* Ocupa a largura inteira */
+    }
+
+    .funding-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e5e5ea;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-fill {
+      width: 68%; /* Porcentagem atingida */
+      height: 100%;
+      background: var(--text-main);
+      border-radius: 10px;
+    }
+
+    .support-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--text-main);
+      color: white;
+      text-align: center;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .support-btn:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    /* Cartões de Links Padrão */
     .link-card {
       display: flex;
       align-items: center;
@@ -206,7 +252,7 @@
 </head>
 <body>
 
-  <!-- Topo com a imagem imersiva -->
+  <!-- Topo -->
   <header class="hero">
     <h1 class="hero-title">Maison Marini ✕ lil Thalis</h1>
     <div class="social-links">
@@ -218,23 +264,41 @@
 
   <main class="content-wrapper">
     
-    <!-- Seção de Ações Principais -->
+    <!-- Seção de Apoio / Financiamento Coletivo -->
+    <section>
+      <h2 class="section-title">Financiamento Coletivo & Apoio</h2>
+      <div class="funding-card">
+        <div class="funding-info">
+          <span>Meta da Coleção 2030</span>
+          <span>68% Atingido</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+          Ajude a financiar a produção piloto dos primeiros tecidos 100% reciclados da nossa collab.
+        </p>
+        <a href="#" class="support-btn">Apoiar Projeto / Fazer Doação</a>
+      </div>
+    </section>
+
+    <!-- Seção O Futuro -->
     <section>
       <h2 class="section-title">O Futuro</h2>
       <div class="links-grid">
         <a href="#" class="link-card">
-          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Relatório 2030">
+          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Manifesto">
           <div class="link-text">
-            <h3>Missão Carbono Zero 2030</h3>
+            <h3>Missão Carbono Zero</h3>
             <p>Leia nosso manifesto sustentável</p>
           </div>
         </a>
 
         <a href="#" class="link-card">
-          <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Loja">
+          <img src="https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=200&auto=format&fit=crop" class="link-image" alt="Parceria">
           <div class="link-text">
-            <h3>Coleção Cápsula Reciclada</h3>
-            <p>Disponível na loja oficial</p>
+            <h3>Seja um Colaborador</h3>
+            <p>Propostas de parceria e marcas</p>
           </div>
         </a>
       </div>
