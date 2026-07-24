@@ -3,442 +3,310 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maison Marini × Lil Thalis | Cinematic</title>
-  
-  <!-- Tipografia: Editorial (Cormorant Garamond) e UI (Inter) -->
+  <meta name="description" content="Maison Marini × Lil Thalis — uma experiência digital editorial, cinematográfica e atemporal.">
+  <title>Maison Marini × Lil Thalis | Origem</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <!-- GSAP & Lenis via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/split-type" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
   <style>
-    /* ==========================================================================
-       Variáveis e Reset Global
-       ========================================================================== */
     :root {
-      --color-light: #f7f6f2;
-      --color-dark: #0a0a0a;
-      --color-accent: #8b8f88;
-      
-      --font-display: 'Cormorant Garamond', serif;
-      --font-ui: 'Inter', sans-serif;
+      --black: #0a0a0a;
+      --white: #f8f8f6;
+      --graphite: #1d1d1b;
+      --ash: #9b9991;
+      --wood: #8a6a4b;
+      --warm-led: #fff3df;
+      --hairline: rgba(248, 248, 246, 0.14);
+      --display: 'Cormorant Garamond', serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--black); scroll-behavior: auto; }
     body {
-      font-family: var(--font-ui);
-      background-color: var(--color-dark);
-      color: var(--color-light);
+      min-height: 100vh;
       overflow-x: hidden;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    ::selection { background: var(--warm-led); color: var(--black); }
+
+    .grain, .anchor-mark, .sound-note { pointer-events: none; position: fixed; z-index: 80; }
+    .grain {
+      inset: 0;
+      opacity: .09;
+      mix-blend-mode: soft-light;
+      background-image: radial-gradient(circle at 18% 22%, rgba(255,255,255,.8) 0 1px, transparent 1px), radial-gradient(circle at 82% 68%, rgba(255,255,255,.55) 0 1px, transparent 1px);
+      background-size: 42px 42px, 61px 61px;
+    }
+    .anchor-mark {
+      right: clamp(18px, 3vw, 46px);
+      bottom: clamp(18px, 3vw, 42px);
+      width: 18px;
+      height: 28px;
+      opacity: 0;
+      color: var(--white);
+      mix-blend-mode: difference;
+    }
+    .anchor-mark svg { width: 100%; height: 100%; }
+    .sound-note {
+      left: clamp(18px, 3vw, 46px);
+      bottom: clamp(18px, 3vw, 42px);
+      font-size: .62rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,.52);
+      mix-blend-mode: difference;
     }
 
-    /* Utilitários de Vídeo em Tela Cheia */
-    .bg-video {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      opacity: 0.6; /* Escurece para leitura */
-    }
-    .video-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
-      z-index: 1;
-    }
-
-    /* ==========================================================================
-       Navegação Limpa
-       ========================================================================== */
     header {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 30px 5vw;
+      z-index: 90;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      z-index: 100;
+      padding: clamp(24px, 4vw, 46px) clamp(22px, 5vw, 72px);
+      color: var(--white);
       mix-blend-mode: difference;
-      color: #fff;
     }
-    .brand { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500; }
-    .menu { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+    .brand, .menu {
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+    }
+    .menu { opacity: .62; }
 
-    /* ==========================================================================
-       Configurações de Cenas (Sem blocos aparentes)
-       ========================================================================== */
-    .scene {
-      position: relative;
-      width: 100vw;
-      height: 150vh; /* Altura extra para animações longas de scroll */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    
-    .camera {
+    main { isolation: isolate; }
+    .chapter { position: relative; min-height: 100vh; overflow: hidden; }
+    .sticky-frame {
       position: sticky;
       top: 0;
-      height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 2;
-    }
-
-    /* Tipografia Monumental */
-    .epic-text {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 15vw, 15rem);
-      font-weight: 300;
-      text-transform: uppercase;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      margin: 0;
-      white-space: nowrap;
-      perspective: 1200px;
-    }
-    .epic-text .char {
-      display: inline-block;
-      will-change: transform, opacity, filter;
-      transform-style: preserve-3d;
-    }
-
-    /* ==========================================================================
-       O Silêncio Visual (Frase centralizada e respiro)
-       ========================================================================== */
-    .silence-scene {
-      background-color: var(--color-light);
-      color: var(--color-dark);
-      height: 150vh;
-    }
-    .silence-phrase {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.3;
-      max-width: 900px;
-      padding: 0 5vw;
-      opacity: 0;
-      filter: blur(10px);
-      transform: translateY(30px);
-    }
-
-    /* ==========================================================================
-       Card Premium (Estilo Apple TV)
-       ========================================================================== */
-    .multimedia-scene {
-      height: 200vh;
-      background-color: var(--color-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .tv-card-wrapper {
-      position: sticky;
-      top: 15vh;
-      width: 85vw;
-      max-width: 1400px;
-      height: 70vh;
-      border-radius: 24px;
-      overflow: hidden;
-      cursor: pointer;
-      transform: scale(0.95);
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.8s ease;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-    .tv-card-wrapper:hover {
-      transform: scale(1);
-      box-shadow: 0 30px 60px rgba(255,255,255,0.05);
-    }
-    .tv-card-wrapper .bg-video { opacity: 0.8; transition: opacity 0.5s; }
-    .tv-card-wrapper:hover .bg-video { opacity: 1; transform: scale(1.05); transition: transform 5s linear; }
-    
-    .tv-card-content {
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%;
-      padding: 60px;
-      z-index: 3;
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-    }
-    .tv-subtitle { font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 10px; }
-    .tv-title { font-family: var(--font-display); font-size: 3.5rem; font-weight: 400; margin-bottom: 20px; line-height: 1; }
-    .tv-desc { font-size: 1.1rem; max-width: 500px; color: rgba(255,255,255,0.7); margin-bottom: 30px; font-weight: 300; }
-    
-    .btn-manifesto {
-      padding: 16px 32px;
-      background-color: #fff;
-      color: #000;
-      border: none;
-      border-radius: 50px;
-      font-family: var(--font-ui);
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .btn-manifesto:hover { transform: scale(1.05); background-color: #e0e0e0; }
-
-    /* ==========================================================================
-       Final Épico & Footer Editorial
-       ========================================================================== */
-    .epic-closing {
-      height: 100vh;
-      background-color: var(--color-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    footer {
-      background-color: var(--color-dark);
-      color: var(--color-light);
-      padding: 100px 5vw 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .footer-grid {
+      min-height: 100vh;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 40px;
-      margin-bottom: 100px;
+      place-items: center;
+      padding: clamp(56px, 8vw, 120px) clamp(22px, 6vw, 96px);
     }
-    .footer-col h4 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 20px; font-weight: 400; font-style: italic; color: var(--color-accent); }
-    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 12px; font-size: 0.85rem; transition: color 0.3s; }
-    .footer-col a:hover { color: #fff; }
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.4);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 30px;
+    .kicker {
+      font-size: .68rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(248,248,246,.56);
+    }
+    .editorial-line {
+      max-width: 980px;
+      font-family: var(--display);
+      font-size: clamp(2.6rem, 7vw, 7.5rem);
+      font-weight: 300;
+      line-height: .94;
+      letter-spacing: -.045em;
     }
 
-    @media (max-width: 768px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .tv-card-content { padding: 30px; }
-      .tv-title { font-size: 2.5rem; }
+    .hero { height: 260vh; background: var(--black); }
+    .origin-word {
+      font-family: var(--display);
+      font-size: clamp(5.2rem, 22vw, 24rem);
+      font-weight: 300;
+      line-height: .78;
+      letter-spacing: -.075em;
+      text-transform: uppercase;
+      transform-style: preserve-3d;
+      perspective: 1200px;
+      will-change: transform, opacity, filter;
+    }
+    .origin-word .char { display: inline-block; transform-style: preserve-3d; will-change: transform, filter, opacity; }
+
+    .chapter-i { height: 220vh; background: var(--black); }
+    .cinema-video, .poster-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform, opacity, filter;
+    }
+    .cinema-video { opacity: .68; filter: saturate(.72) contrast(1.08); }
+    .shade { position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, transparent 0 28%, rgba(10,10,10,.34) 58%, rgba(10,10,10,.92) 100%), linear-gradient(180deg, rgba(10,10,10,.92), transparent 26%, rgba(10,10,10,.94)); }
+    .chapter-i-copy { position: relative; z-index: 2; align-self: end; justify-self: start; max-width: 760px; margin-bottom: 7vh; }
+    .chapter-i-copy p { margin-top: 28px; color: rgba(248,248,246,.72); font-size: clamp(1rem, 1.3vw, 1.28rem); line-height: 1.8; max-width: 560px; }
+
+    .chapter-ii { height: 190vh; background: var(--white); color: var(--black); }
+    .chapter-ii .sticky-frame { gap: 12vh; align-content: center; }
+    .legacy-line { color: var(--black); opacity: 0; filter: blur(18px); transform: translateY(44px); }
+
+    .manifesto { height: 185vh; background: linear-gradient(180deg, var(--white) 0%, var(--black) 22%); }
+    .tv-card {
+      position: sticky;
+      top: 12vh;
+      width: min(88vw, 1420px);
+      height: 76vh;
+      overflow: hidden;
+      border-radius: clamp(18px, 2vw, 30px);
+      background: var(--graphite);
+      box-shadow: 0 42px 110px rgba(0,0,0,.58), inset 0 0 0 1px rgba(255,255,255,.08);
+      cursor: pointer;
+      transform-origin: center;
+    }
+    .tv-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,10,.74), transparent 54%), linear-gradient(0deg, rgba(10,10,10,.86), transparent 55%); }
+    .tv-copy { position: absolute; z-index: 3; left: clamp(28px, 5vw, 80px); bottom: clamp(30px, 6vw, 86px); max-width: 520px; }
+    .tv-copy h2 { margin: 14px 0 20px; font-family: var(--display); font-size: clamp(4rem, 7vw, 8rem); font-weight: 300; line-height: .82; letter-spacing: -.06em; }
+    .watch { display: inline-flex; align-items: center; gap: 12px; padding: 14px 22px; border: 1px solid rgba(248,248,246,.22); border-radius: 999px; background: rgba(248,248,246,.08); color: var(--white); backdrop-filter: blur(18px); cursor: pointer; }
+
+    .collections { background: var(--black); }
+    .collection { min-height: 115vh; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 7vw; padding: 10vh clamp(22px, 6vw, 96px); }
+    .collection:nth-child(even) { grid-template-columns: .9fr 1.1fr; }
+    .collection:nth-child(even) .collection-art { order: 2; }
+    .collection-art { position: relative; height: min(78vh, 760px); overflow: hidden; border-radius: 2px; background: #141414; }
+    .poster-img { opacity: .82; filter: saturate(.78) contrast(1.06); }
+    .collection-copy { max-width: 470px; }
+    .collection-copy h2 { margin: 18px 0 28px; font-family: var(--display); font-size: clamp(4rem, 8vw, 9rem); font-weight: 300; line-height: .82; letter-spacing: -.065em; }
+    .quiet-link { display: inline-block; margin-top: 28px; font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(248,248,246,.72); border-bottom: 1px solid rgba(248,248,246,.28); padding-bottom: 10px; }
+
+    .journal { background: var(--white); color: var(--black); padding: 18vh clamp(22px, 6vw, 96px); }
+    .journal-head { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: end; margin-bottom: 12vh; }
+    .journal-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(28px, 5vw, 84px); align-items: start; }
+    .article { border-top: 1px solid rgba(10,10,10,.18); padding-top: 24px; }
+    .article img { width: 100%; height: clamp(280px, 45vw, 620px); object-fit: cover; margin-bottom: 24px; filter: saturate(.65); }
+    .article h3 { font-family: var(--display); font-size: clamp(2.2rem, 4vw, 4.6rem); font-weight: 300; line-height: .98; letter-spacing: -.04em; }
+    .article p, .journal-head p, .collection-copy p { color: color-mix(in srgb, currentColor 68%, transparent); line-height: 1.8; font-weight: 300; }
+    .article.small + .article.small { margin-top: 80px; }
+    .article.small img { height: 330px; }
+
+    .signature { height: 240vh; background: var(--black); }
+    .signature-word { font-family: var(--display); font-size: clamp(3.6rem, 13vw, 15rem); font-weight: 300; letter-spacing: -.07em; white-space: nowrap; }
+    .signature-word .char { opacity: 0; filter: blur(12px); }
+
+    .future { min-height: 120vh; background: radial-gradient(circle at 50% 30%, rgba(138,106,75,.18), transparent 36%), var(--black); display: grid; place-items: center; padding: clamp(72px, 10vw, 150px) 22px; text-align: center; }
+    .future-inner { max-width: 920px; }
+    .future h2 { margin: 26px 0; font-family: var(--display); font-size: clamp(3rem, 7vw, 8rem); font-weight: 300; line-height: .94; letter-spacing: -.055em; }
+    .future p { max-width: 560px; margin: 0 auto 42px; color: rgba(248,248,246,.66); line-height: 1.85; }
+    .future .quiet-link { color: var(--warm-led); }
+
+    footer { background: var(--black); color: var(--white); padding: 12vh clamp(22px, 6vw, 96px) 5vh; border-top: 1px solid var(--hairline); }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr repeat(2, .8fr); gap: 8vw; margin-bottom: 12vh; }
+    .footer-logo { font-family: var(--display); font-size: clamp(2.8rem, 6vw, 7rem); font-weight: 300; line-height: .88; letter-spacing: -.06em; }
+    .footer-links { display: grid; gap: 14px; align-content: start; }
+    .footer-links a { color: rgba(248,248,246,.58); font-size: .82rem; letter-spacing: .16em; text-transform: uppercase; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 24px; color: rgba(248,248,246,.38); font-size: .72rem; letter-spacing: .08em; }
+
+    .modal { position: fixed; inset: 0; z-index: 200; display: none; background: rgba(0,0,0,.94); place-items: center; padding: 4vw; }
+    .modal.is-open { display: grid; }
+    .modal video { width: min(100%, 1400px); max-height: 82vh; object-fit: cover; }
+    .close { position: fixed; top: 28px; right: 34px; border: 0; background: transparent; color: var(--white); font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
+
+    @media (max-width: 820px) {
+      .collection, .collection:nth-child(even), .journal-head, .journal-grid, .footer-grid { grid-template-columns: 1fr; }
+      .collection:nth-child(even) .collection-art { order: 0; }
+      .collection { min-height: auto; padding-top: 16vh; }
+      .collection-art { height: 58vh; }
+      .tv-card { width: 92vw; height: 68vh; }
+      header { align-items: flex-start; }
+      .menu { display: none; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Cabeçalho -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="sound-note">Som ambiente / silêncio</div>
+  <div class="anchor-mark" aria-hidden="true"><svg viewBox="0 0 20 32" fill="none"><path d="M10 2v26M4 10c0-3.4 2.7-6 6-6s6 2.6 6 6c0 4-3.8 6.7-6 6.7S4 14 4 10Z" stroke="currentColor" stroke-width="1.1"/><path d="M3 24c2 3.8 4.3 5.7 7 5.7s5-1.9 7-5.7" stroke="currentColor" stroke-width="1.1"/></svg></div>
   <header>
-    <div class="brand">Maison Marini × Lil Thalis</div>
-    <div class="menu">Menu</div>
+    <a class="brand" href="#origem">Maison Marini × Lil Thalis</a>
+    <nav class="menu" aria-label="Navegação principal">Story · Manifesto · Journal · Future</nav>
   </header>
 
-  <!-- CENA 1: Vídeo da Natureza/Mar com tipografia monumental -->
-  <section class="scene">
-    <video class="bg-video" autoplay loop muted playsinline>
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-    <div class="camera">
-      <h1 class="epic-text gs-split">ORIGEM</h1>
-    </div>
-  </section>
+  <main>
+    <section class="chapter hero" id="origem" aria-label="Origem">
+      <div class="sticky-frame"><h1 class="origin-word split">ORIGEM</h1></div>
+    </section>
 
-  <!-- CENA 2: Silêncio Visual -->
-  <section class="scene silence-scene">
-    <div class="camera" style="background-color: var(--color-light);">
-      <h2 class="silence-phrase">
-        "Onde o tempo não dita as regras. Onde o corte perfeito e o mar encontram sua essência imortal."
-      </h2>
-    </div>
-  </section>
+    <section class="chapter chapter-i" id="story">
+      <div class="sticky-frame">
+        <video class="cinema-video depth" autoplay loop muted playsinline preload="metadata" poster="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=70"><source src="https://assets.mixkit.co/videos/preview/mixkit-misty-mountains-at-sunrise-1853-large.mp4" type="video/mp4"></video>
+        <div class="shade"></div>
+        <div class="chapter-i-copy reveal"><span class="kicker">Capítulo I · Matéria</span><h2 class="editorial-line">Toda criação começa antes do primeiro desenho.</h2><p>Mar, montanhas, neblina, madeira e arquitetura italiana entram como memória — não como cenário. A peça nasce quando a luz encontra silêncio suficiente para permanecer.</p></div>
+      </div>
+    </section>
 
-  <!-- CENA 3: Card Multimídia (Apple TV Style) -->
-  <section class="multimedia-scene">
-    <div class="tv-card-wrapper" id="tv-card">
-      <!-- Vídeo de detalhe de tecido/luz (placeholder de luz abstrata/tecido) -->
-      <video class="bg-video" autoplay loop muted playsinline style="opacity: 1;">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-2677-large.mp4" type="video/mp4">
-      </video>
-      <div class="tv-card-content">
-        <span class="tv-subtitle">Cápsula 2035</span>
-        <h3 class="tv-title">Uma nova era<br>para o luxo sustentável.</h3>
-        <p class="tv-desc">A precisão da alfaiataria italiana fundida com a fluidez do streetwear contemporâneo. Produzido inteiramente com impacto regenerativo.</p>
-        <button class="btn-manifesto">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          Assistir ao manifesto
-        </button>
-      </div>
-    </div>
-  </section>
+    <section class="chapter chapter-ii" id="legacy">
+      <div class="sticky-frame"><h2 class="editorial-line legacy-line">Não seguimos tendências.</h2><h2 class="editorial-line legacy-line">Construímos legado.</h2></div>
+    </section>
 
-  <!-- CENA 4: Final Épico -->
-  <section class="epic-closing">
-    <h1 class="epic-text gs-split">LEGADO</h1>
-  </section>
+    <section class="chapter manifesto" id="manifesto">
+      <article class="tv-card" id="manifestoCard" aria-label="Abrir manifesto em vídeo" tabindex="0">
+        <video class="cinema-video" autoplay loop muted playsinline preload="metadata" poster="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1800&q=70"><source src="https://assets.mixkit.co/videos/preview/mixkit-white-silk-fabric-moving-in-the-wind-4709-large.mp4" type="video/mp4"></video>
+        <div class="tv-copy"><span class="kicker">Capítulo III</span><h2>Manifesto</h2><button class="watch" type="button">▶ Assistir</button></div>
+      </article>
+    </section>
 
-  <!-- Footer Editorial -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>A Colaboração</h4>
-        <a href="#">O Manifesto</a>
-        <a href="#">Artesanato & Inovação</a>
-        <a href="#">A Origem (Itália)</a>
-      </div>
-      <div class="footer-col">
-        <h4>Sustentabilidade</h4>
-        <a href="#">Relatório 2035</a>
-        <a href="#">Fibras Regenerativas</a>
-        <a href="#">Transparência</a>
-      </div>
-      <div class="footer-col">
-        <h4>Serviços</h4>
-        <a href="#">Atendimento Privé</a>
-        <a href="#">Cuidado da Peça</a>
-        <a href="#">Boutiques</a>
-      </div>
-      <div class="footer-col">
-        <h4>Social</h4>
-        <a href="#">Instagram</a>
-        <a href="#">YouTube</a>
-        <a href="#">Pinterest</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>Brasil / Português</span>
-      <span>© 2026 Maison Marini × Lil Thalis. Todos os direitos reservados.</span>
-    </div>
-  </footer>
+    <section class="collections" id="collections" aria-label="Coleções">
+      <article class="collection reveal"><figure class="collection-art"><img class="poster-img depth" loading="lazy" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1500&q=74" alt="Campanha editorial da Capsule I"></figure><div class="collection-copy"><span class="kicker">Capítulo IV</span><h2>Capsule I</h2><p>Uma campanha em nogueira, algodão pesado e luz branca quente. Poucas peças, presença absoluta.</p><a class="quiet-link" href="#">Conhecer coleção</a></div></article>
+      <article class="collection reveal"><figure class="collection-art"><img class="poster-img depth" loading="lazy" src="https://images.unsplash.com/photo-1506629905607-d405d7d3b0d2?auto=format&fit=crop&w=1500&q=74" alt="Campanha editorial da Capsule II"></figure><div class="collection-copy"><span class="kicker">Capítulo IV</span><h2>Capsule II</h2><p>Arquitetura, pele, linho e sombra gráfica. Nada de catálogo: apenas intenção.</p><a class="quiet-link" href="#">Conhecer coleção</a></div></article>
+    </section>
 
-  <script>
-    // 1. Configuração do Lenis (Scroll Cinemático - Apple style)
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
+    <section class="journal" id="journal">
+      <div class="journal-head reveal"><span class="kicker">Capítulo V · Journal</span><p>Processo criativo, sketches, materiais, arquitetura, perfumaria e moda tratados como páginas de uma revista silenciosa.</p></div>
+      <div class="journal-grid">
+        <article class="article reveal"><img loading="lazy" src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1400&q=74" alt="Sketches e processo criativo"><h3>O gesto antes da forma.</h3><p>Notas de ateliê sobre proporção, pausa e permanência.</p></article>
+        <div><article class="article small reveal"><img loading="lazy" src="https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=1000&q=74" alt="Madeira e arquitetura"><h3>Madeira, pedra, ar.</h3></article><article class="article small reveal"><img loading="lazy" src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=1000&q=74" alt="Frasco de perfumaria"><h3>O perfume da memória.</h3></article></div>
+      </div>
+    </section>
+
+    <section class="chapter signature" aria-label="Assinatura Maison Marini"><div class="sticky-frame"><h2 class="signature-word split">MAISON MARINI</h2></div></section>
+
+    <section class="future" id="future"><div class="future-inner reveal"><span class="kicker">Capítulo VII · Future</span><h2>Toda criação deixa uma marca.</h2><p>A nossa também pode deixar um impacto positivo. Sem propaganda. Apenas continuidade, responsabilidade e o próximo capítulo.</p><a class="quiet-link" href="#future">Conheça nosso próximo capítulo</a></div></section>
+  </main>
+
+  <footer id="contact"><div class="footer-grid"><div class="footer-logo">Maison<br>Marini</div><nav class="footer-links" aria-label="Links editoriais"><a href="#story">Story</a><a href="#manifesto">Manifesto</a><a href="#journal">Journal</a><a href="#collections">Collections</a></nav><nav class="footer-links" aria-label="Links externos"><a href="#future">Future</a><a href="mailto:contact@maisonmarini.example">Contact</a><a href="https://instagram.com/" rel="noreferrer">Instagram</a><a href="https://github.com/" rel="noreferrer">GitHub</a></nav></div><div class="footer-bottom"><span>Brasil / Português</span><span>© 2026 Maison Marini × Lil Thalis. Todos os direitos reservados.</span></div></footer>
+
+  <div class="modal" id="videoModal" aria-hidden="true"><button class="close" type="button">Fechar</button><video controls playsinline preload="metadata" poster="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1800&q=70"><source src="https://assets.mixkit.co/videos/preview/mixkit-white-silk-fabric-moving-in-the-wind-4709-large.mp4" type="video/mp4"></video></div>
+
+  <script type="module">
+    import { animate } from 'https://esm.sh/framer-motion@11.3.21/dom';
+    window.addEventListener('load', () => {
+      gsap.registerPlugin(ScrollTrigger);
+      const lenis = new Lenis({ duration: 1.65, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(time => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      document.querySelectorAll('.split').forEach(el => new SplitType(el, { types: 'chars' }));
+      gsap.fromTo('.origin-word .char', { opacity: 1, filter: 'blur(0px)', z: 0, rotateZ: 0, scale: 1 }, { opacity: 0, filter: 'blur(28px)', z: -900, rotateZ: i => (i - 3) * 2.2, scale: 2.7, stagger: .045, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.4, pin: '.hero .sticky-frame' } });
+      gsap.to('.chapter-i .depth', { scale: 1.18, yPercent: -8, filter: 'blur(1.5px) saturate(.68)', scrollTrigger: { trigger: '.chapter-i', start: 'top bottom', end: 'bottom top', scrub: true } });
+      gsap.to('.legacy-line', { opacity: 1, y: 0, filter: 'blur(0px)', stagger: .35, scrollTrigger: { trigger: '.chapter-ii', start: 'top 25%', end: 'bottom 55%', scrub: 1.2 } });
+      gsap.fromTo('.tv-card', { scale: .84, y: 130, filter: 'blur(10px)' }, { scale: 1, y: 0, filter: 'blur(0px)', scrollTrigger: { trigger: '.manifesto', start: 'top 70%', end: 'top 18%', scrub: 1.2 } });
+      gsap.utils.toArray('.reveal').forEach(el => gsap.fromTo(el, { opacity: 0, y: 70, filter: 'blur(16px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 82%' } }));
+      gsap.utils.toArray('.collection .depth').forEach(img => gsap.to(img, { scale: 1.15, yPercent: -8, scrollTrigger: { trigger: img.closest('.collection'), start: 'top bottom', end: 'bottom top', scrub: true } }));
+      gsap.to('.signature-word .char', { opacity: 1, filter: 'blur(0px)', stagger: .12, scrollTrigger: { trigger: '.signature', start: 'top top', end: '55% top', scrub: 1, pin: '.signature .sticky-frame' } });
+      gsap.to('.signature-word .char', { opacity: 0, filter: 'blur(18px)', y: -40, stagger: { amount: .7, from: 'center' }, scrollTrigger: { trigger: '.signature', start: '58% top', end: 'bottom top', scrub: 1 } });
+      gsap.to('.anchor-mark', { opacity: .68, scrollTrigger: { trigger: '.signature', start: '70% top', end: 'bottom top', scrub: true } });
+      animate('header', { opacity: [0, 1], y: [-10, 0] }, { duration: 1.4, ease: [0.16, 1, 0.3, 1] });
+
+      const modal = document.getElementById('videoModal');
+      const modalVideo = modal.querySelector('video');
+      const openModal = () => { modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); modalVideo.play(); };
+      const closeModal = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); modalVideo.pause(); };
+      document.getElementById('manifestoCard').addEventListener('click', openModal);
+      document.getElementById('manifestoCard').addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') openModal(); });
+      modal.querySelector('.close').addEventListener('click', closeModal);
+      modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
     });
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // 2. Registro do GSAP
-    gsap.registerPlugin(ScrollTrigger);
-
-    // 3. Sistema Dinâmico de Quebra de Texto para as letras monumentais
-    const epicTexts = document.querySelectorAll('.gs-split');
-    epicTexts.forEach(textEl => {
-      const text = textEl.innerText;
-      textEl.innerHTML = ''; 
-      text.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.innerText = char === ' ' ? '\u00A0' : char;
-        span.classList.add('char');
-        textEl.appendChild(span);
-      });
-    });
-
-    // 4. Animação da Tipografia Monumental (ORIGEM e LEGADO)
-    epicTexts.forEach((el) => {
-      const chars = el.querySelectorAll('.char');
-      
-      gsap.fromTo(chars, {
-        opacity: 0,
-        z: () => gsap.utils.random(500, 1000), // Profundidade absurda
-        rotationX: () => gsap.utils.random(-80, 80),
-        y: () => gsap.utils.random(-200, 200),
-        filter: "blur(25px)",
-      }, {
-        opacity: 1,
-        z: 0,
-        rotationX: 0,
-        y: 0,
-        filter: "blur(0px)",
-        stagger: { amount: 1, from: "center" },
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el.parentElement,
-          start: "top 60%", 
-          end: "top 10%", 
-          scrub: 1.5, // Liga o movimento diretamente ao scroll do usuário
-        }
-      });
-
-      // Desmontar ao sair da tela (efeito de fumaça subindo)
-      gsap.to(chars, {
-        opacity: 0,
-        y: -150,
-        z: () => gsap.utils.random(-500, -800),
-        filter: "blur(20px)",
-        stagger: { amount: 0.5, from: "random" },
-        scrollTrigger: {
-          trigger: el.parentElement,
-          start: "bottom 80%",
-          end: "bottom 20%",
-          scrub: 1,
-        }
-      });
-    });
-
-    // 5. Animação do Silêncio Visual (Fade e Blur in/out)
-    gsap.fromTo(".silence-phrase", 
-      { opacity: 0, filter: "blur(15px)", y: 50 },
-      { 
-        opacity: 1, filter: "blur(0px)", y: 0, duration: 2, ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".silence-scene",
-          start: "top 40%",
-          end: "top 20%",
-          scrub: 1
-        }
-      }
-    );
-    gsap.to(".silence-phrase", {
-      opacity: 0, filter: "blur(15px)", y: -50,
-      scrollTrigger: {
-        trigger: ".silence-scene",
-        start: "bottom 60%",
-        end: "bottom 30%",
-        scrub: 1
-      }
-    });
-
-    // 6. Animação do Card Apple TV (Cresce de baixo para cima acompanhando o scroll)
-    gsap.fromTo("#tv-card", 
-      { scale: 0.8, opacity: 0, y: 100 },
-      {
-        scale: 1, opacity: 1, y: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".multimedia-scene",
-          start: "top 70%",
-          end: "top 20%",
-          scrub: 1.5
-        }
-      }
-    );
   </script>
 </body>
 </html>
